@@ -429,11 +429,18 @@
                     <!-- Customers Section -->
                     ${customersHtml}
 
+                    <!-- Product Feedback & Customer Sentiment Section -->
+                    <div class="bg-gray-900/50 p-4 rounded-lg border border-gray-800 mb-8">
+                        <h3 class="text-2xl font-bold text-yellow-400 mb-2">Product Feedback & Customer Sentiment</h3>
+                        <div id="company-feedback"></div>
+                    </div>
+
                     <!-- Products Section -->
                     <h3 class="text-3xl font-bold text-white mb-4 border-b border-gray-700 pb-2">Products</h3>
                     <div>${productsHtml}</div>
                 </div>
             `;
+            renderCompanyFeedback(companyKey);
             addAccordionListeners();
         }
 
@@ -462,6 +469,147 @@
                     icon.classList.toggle('rotate-180');
                 });
             });
+        }
+
+        // Add feedback data for each company
+        const companyFeedback = {
+            commerceiq: {
+                strengths: [
+                    "Powerful for monitoring Amazon 1P performance with an intuitive dashboard.",
+                    "Customer Success team is praised for proactive, tailored support.",
+                    "Strong at consolidating sales, retail media, and digital shelf data.",
+                    "Improves forecasting and fulfillment; dashboards provide deep insight into POs, forecasts, and demand shifts."
+                ],
+                painPoints: [
+                    "Data export process requires significant manual cleaning for Excel, which can be time-consuming.",
+                    "Some users report minor friction with initial setup and technical customizations.",
+                    "Employee feedback notes room for improvement in work culture and internal communications."
+                ],
+                sentiment: "Generally trusted by large brands for ecommerce operations and praised for responsive support, though usability and data portability are areas for enhancement."
+            },
+            mixpanel: {
+                strengths: [
+                    "Real-time insights; strong event-based analytics for user behavior and retention.",
+                    "Easy setup and data visualizations; intuitive UX for non-technical and technical users alike.",
+                    "Funnels, segmentation, and dashboards are robust and highly useful.",
+                    "Seen as reliable and continually improving, favored by product and marketing managers."
+                ],
+                painPoints: [
+                    "Advanced setup (custom events) may require developer involvement.",
+                    "Some features can be hidden or take time to discover in the interface.",
+                    "Pricing can escalate for high event volumes or growing teams, challenging for smaller businesses.",
+                    "Integrations with other tools sometimes incomplete."
+                ],
+                sentiment: "Widely recommended for clear analytics and user insights, but teams should budget for potential pricing jumps and ensure developer access for full customization."
+            },
+            gobblecube: {
+                strengths: [
+                    "Speeds up meal prep dramatically (classic Gobble customer reviews highlight very fast, easy meal kit setup).",
+                    "Quality of food is generally appreciated; selection accommodates dietary needs."
+                ],
+                painPoints: [
+                    "Multiple customer complaints about customer service: slow replies, lack of meaningful support for billing/shipment issues, and difficulty resolving spoiled/incorrect food deliveries.",
+                    "Recurrent concerns about auto-billing and quality control in shipments.",
+                    "Some users see the service as 'scammy' in its handling of credits and refund requests."
+                ],
+                sentiment: "Quick and tasty meals, but customer service and billing practices receive significant criticism, causing dissatisfaction and distrust among some users."
+            },
+            nielseniq: {
+                strengths: [
+                    "Delivers global, comprehensive purchase behavior intelligence.",
+                    "Some panelists praise the data depth and find long-term value in consistent surveying."
+                ],
+                painPoints: [
+                    "Major frustration around customer service: slow, repetitive calls, account lockouts, overbearing survey requirements, and cumbersome rewards redemption.",
+                    "Frequent technical issues with their app and point systems.",
+                    "Perceived as invasive; users report constant reminders and high friction earning/redeeming rewards."
+                ],
+                sentiment: "Respected for large-scale market data, but consumer panel experiences are hampered by poor app usability, reward issues, and aggressive follow-ups."
+            },
+            contentsquare: {
+                strengths: [
+                    "Top marks for visualizing user behavior, heatmaps, and rapid root-cause analysis of digital journeys.",
+                    "AI-powered insights (Sense) and customer success/support teams are highly praised for responsiveness and onboarding help.",
+                    "Empowers quick discovery of conversion issues and actionable insights."
+                ],
+                painPoints: [
+                    "Learning curve: some features require development resources to implement fully.",
+                    "Price is relatively high compared to industry peers.",
+                    "New users can find configuration and prioritization for dev resources challenging."
+                ],
+                sentiment: "Powerful, highly visual, and transformative for digital analytics teams—though clients note a steep learning curve and wish for lower barriers to advanced feature access."
+            },
+            applause: {
+                strengths: [
+                    "Real-world QA and UX feedback from a global crowd; known for high-quality, actionable bug reports.",
+                    "Quick response times from support; professional, vetted testers.",
+                    "Customer-centric, always seeking product/service improvement based on client feedback."
+                ],
+                painPoints: [
+                    "Service can be expensive for intensive or continual testing.",
+                    "Platform maintenance (keeping up with spreadsheets and video bug submissions) can be cumbersome.",
+                    "Some users request more flexible usage models and easier video workflow."
+                ],
+                sentiment: "Valued partner for QA and usability testing; responsiveness and expertise drive confidence, though pricing and technical workflow could be smoother."
+            },
+            rasa: {
+                strengths: [
+                    "Highly customizable conversational AI with open source benefits.",
+                    "Praised especially for helping brands move away from 'black-box' AI; customers value the control and flexibility.",
+                    "Engaged developer community and informative content bolster adoption."
+                ],
+                painPoints: [
+                    "Learning curve for non-developers; some products (like Studio) aim to narrow this, but reviewers say technical expertise is still important.",
+                    "Taste preferences for beverage (if searching for the coffee-alternative product, not the conversational AI), can also be divisive, but AI product feedback is mostly positive regarding features and support."
+                ],
+                sentiment: "Respected for powerful, transparent AI tooling—great for enterprises seeking control, though not fully plug-and-play for every team."
+            },
+            intenthq: {
+                strengths: [
+                    "Privacy-first focus stands out; valued for first-party data insights and advanced segmentation.",
+                    "Flexible for use in telco and retail, enabling personalized marketing."
+                ],
+                painPoints: [
+                    "Public-facing product reviews are extremely limited.",
+                    "Employee feedback appreciates mission but indicates company communications and operational structure could improve."
+                ],
+                sentiment: "Good reputation in specialist sectors, especially for privacy and granular analytics, but lacks substantial third-party product review data."
+            },
+            piwheel: {
+                strengths: [
+                    "Provides actionable insights into ecommerce performance and market dynamics.",
+                    "Notably used by major brands for market share, pricing, and assortment intelligence."
+                ],
+                painPoints: [
+                    "Minimal third-party review coverage; little customer critique or independent feedback found publicly."
+                ],
+                sentiment: "Generally positive adoption among multinational consumer brands, but a lack of direct user reviews limits insight into specific strengths or weaknesses."
+            }
+        };
+
+        // Function to render feedback for a company
+        function renderCompanyFeedback(companyKey) {
+            const feedback = companyFeedback[companyKey];
+            if (!feedback) return;
+            const feedbackDiv = document.getElementById('company-feedback');
+            feedbackDiv.innerHTML = `
+                <div class="mb-3">
+                    <h4 class="text-lg font-semibold text-green-400 mb-1">Where They Excel</h4>
+                    <ul class="list-disc pl-5 space-y-1 text-gray-200">
+                        ${feedback.strengths.map(str => `<li>${str}</li>`).join('')}
+                    </ul>
+                </div>
+                <div class="mb-3">
+                    <h4 class="text-lg font-semibold text-red-400 mb-1">Pain Points</h4>
+                    <ul class="list-disc pl-5 space-y-1 text-gray-200">
+                        ${feedback.painPoints.map(pain => `<li>${pain}</li>`).join('')}
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-yellow-300 mb-1">Customer Sentiment</h4>
+                    <p class="text-gray-300">${feedback.sentiment}</p>
+                </div>
+            `;
         }
 
         // Initial setup
