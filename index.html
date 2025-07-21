@@ -1,377 +1,824 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Analytics & Intelligence: Competitor Analysis</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        /* Classic Theme & Custom Styles */
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #121212; /* Dark charcoal background */
-            color: #E0E0E0; /* Soft white text */
-        }
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Playfair Display', serif;
-        }
-        .company-tab {
-            transition: all 0.3s ease;
-            border-bottom: 2px solid transparent;
-        }
-        .company-tab:hover {
-            background-color: #2a2a2a;
-            border-bottom-color: #D4AF37; /* Gold accent on hover */
-        }
-        .company-tab.active {
-            color: #ffffff;
-            font-weight: 500;
-            border-bottom-color: #D4AF37;
-        }
-        .product-accordion-header {
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .product-accordion-header:hover {
-            background-color: #252525;
-        }
-        .product-accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .product-accordion-content.open {
-            max-height: 1200px; /* Increased for content */
-        }
-        .prose-custom ul > li::before {
-            content: '•';
-            position: absolute;
-            left: 0;
-            color: #D4AF37; /* Gold accent for bullets */
-        }
-        /* Custom scrollbar for tab navigation */
-        .tabs-container::-webkit-scrollbar {
-            height: 4px;
-        }
-        .tabs-container::-webkit-scrollbar-track {
-            background: #1f1f1f;
-        }
-        .tabs-container::-webkit-scrollbar-thumb {
-            background-color: #4a4a4a;
-            border-radius: 20px;
-        }
+      /* Classic Theme & Custom Styles */
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #121212; /* Dark charcoal background */
+        color: #e0e0e0; /* Soft white text */
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: "Playfair Display", serif;
+      }
+      .company-tab {
+        transition: all 0.3s ease;
+        border-bottom: 2px solid transparent;
+      }
+      .company-tab:hover {
+        background-color: #2a2a2a;
+        border-bottom-color: #d4af37; /* Gold accent on hover */
+      }
+      .company-tab.active {
+        color: #ffffff;
+        font-weight: 500;
+        border-bottom-color: #d4af37;
+      }
+      .product-accordion-header {
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      .product-accordion-header:hover {
+        background-color: #252525;
+      }
+      .product-accordion-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .product-accordion-content.open {
+        max-height: 1200px; /* Increased for content */
+      }
+      .prose-custom ul > li::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        color: #d4af37; /* Gold accent for bullets */
+      }
+      /* Custom scrollbar for tab navigation */
+      .tabs-container::-webkit-scrollbar {
+        height: 4px;
+      }
+      .tabs-container::-webkit-scrollbar-track {
+        background: #1f1f1f;
+      }
+      .tabs-container::-webkit-scrollbar-thumb {
+        background-color: #4a4a4a;
+        border-radius: 20px;
+      }
 
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+      /* Animations */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
         }
-        .fade-in {
-            animation: fadeIn 0.6s ease-out forwards;
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
-        .icon-rotate {
-            transition: transform 0.4s ease;
-        }
-        .rotate-180 {
-            transform: rotate(180deg);
-        }
+      }
+      .fade-in {
+        animation: fadeIn 0.6s ease-out forwards;
+      }
+      .icon-rotate {
+        transition: transform 0.4s ease;
+      }
+      .rotate-180 {
+        transform: rotate(180deg);
+      }
     </style>
-</head>
-<body class="antialiased">
-
+  </head>
+  <body class="antialiased">
     <div class="container mx-auto p-4 sm:p-6 lg:p-8">
-        <!-- Header Section -->
-        <header class="text-center mb-10">
-            <!-- Removed Perplexity logo and word -->
-            <h1 class="text-4xl sm:text-5xl font-bold text-white">Complete Product Analysis</h1>
-            <p class="text-lg text-gray-400 mt-3">9 Analytics & Intelligence Companies</p>
-        </header>
+      <!-- Header Section -->
+      <header class="text-center mb-10">
+        <!-- Removed Perplexity logo and word -->
+        <h1 class="text-4xl sm:text-5xl font-bold text-white">
+          Complete Product Analysis
+        </h1>
+        <p class="text-lg text-gray-400 mt-3">
+          9 Analytics & Intelligence Companies
+        </p>
+      </header>
 
-        <!-- Tab Navigation -->
-        <div class="mb-8">
-            <nav class="tabs-container flex space-x-1 sm:space-x-2 border-b border-gray-800 overflow-x-auto pb-2">
-                <button data-company="commerceiq" class="company-tab active text-sm sm:text-base whitespace-nowrap px-4 py-3 rounded-t-lg">CommerceIQ</button>
-                <button data-company="mixpanel" class="company-tab text-sm sm:text-base whitespace-nowrap px-4 py-3 rounded-t-lg">Mixpanel</button>
-                <button data-company="gobblecube" class="company-tab text-sm sm:text-base whitespace-nowrap px-4 py-3 rounded-t-lg">GobbleCube</button>
-                <button data-company="nielseniq" class="company-tab text-sm sm:text-base whitespace-nowrap px-4 py-3 rounded-t-lg">NielsenIQ</button>
-                <button data-company="contentsquare" class="company-tab text-sm sm:text-base whitespace-nowrap px-4 py-3 rounded-t-lg">ContentSquare</button>
-                <button data-company="applause" class="company-tab text-sm sm:text-base whitespace-nowrap px-4 py-3 rounded-t-lg">Applause</button>
-                <button data-company="rasa" class="company-tab text-sm sm:text-base whitespace-nowrap px-4 py-3 rounded-t-lg">Rasa</button>
-                <button data-company="intenthq" class="company-tab text-sm sm:text-base whitespace-nowrap px-4 py-3 rounded-t-lg">Intent HQ</button>
-                <button data-company="piwheel" class="company-tab text-sm sm:text-base whitespace-nowrap px-4 py-3 rounded-t-lg">PI Wheel</button>
-            </nav>
-        </div>
+      <!-- Tab Navigation -->
+      <div class="mb-8">
+        <nav
+          class="tabs-container flex space-x-1 sm:space-x-2 border-b border-gray-800 overflow-x-auto pb-2"
+        >
+          <button
+            data-company="commerceiq"
+            class="company-tab active text-sm sm:text-base whitespace-nowrap px-4 py-3 rounded-t-lg"
+          >
+            CommerceIQ
+          </button>
+          <button
+            data-company="mixpanel"
+            class="company-tab text-sm sm:text-base whitespace-nowrap px-4 py-3 rounded-t-lg"
+          >
+            Mixpanel
+          </button>
+          <button
+            data-company="gobblecube"
+            class="company-tab text-sm sm:text-base whitespace-nowrap px-4 py-3 rounded-t-lg"
+          >
+            GobbleCube
+          </button>
+          <button
+            data-company="nielseniq"
+            class="company-tab text-sm sm:text-base whitespace-nowrap px-4 py-3 rounded-t-lg"
+          >
+            NielsenIQ
+          </button>
+          <button
+            data-company="contentsquare"
+            class="company-tab text-sm sm:text-base whitespace-nowrap px-4 py-3 rounded-t-lg"
+          >
+            ContentSquare
+          </button>
+          <button
+            data-company="applause"
+            class="company-tab text-sm sm:text-base whitespace-nowrap px-4 py-3 rounded-t-lg"
+          >
+            Applause
+          </button>
+          <button
+            data-company="rasa"
+            class="company-tab text-sm sm:text-base whitespace-nowrap px-4 py-3 rounded-t-lg"
+          >
+            Rasa
+          </button>
+          <button
+            data-company="intenthq"
+            class="company-tab text-sm sm:text-base whitespace-nowrap px-4 py-3 rounded-t-lg"
+          >
+            Intent HQ
+          </button>
+          <button
+            data-company="piwheel"
+            class="company-tab text-sm sm:text-base whitespace-nowrap px-4 py-3 rounded-t-lg"
+          >
+            PI Wheel
+          </button>
+        </nav>
+      </div>
 
-        <!-- Main Content Area -->
-        <main id="analysis-content">
-            <!-- Company data will be injected here by JavaScript -->
-        </main>
+      <!-- Main Content Area -->
+      <main id="analysis-content">
+        <!-- Company data will be injected here by JavaScript -->
+      </main>
     </div>
 
     <script>
-        // Data for all companies (remains the same as previous version)
-        const companyData = {
-            commerceiq: {
-                name: "CommerceIQ",
-                logo: "https://images.crunchbase.com/image/upload/c_lpad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/zqwllw0ot2egt5imvoph",
-                website: "https://www.commerceiq.ai/",
-                founded: 2012,
-                funding: "$200 million",
-                customers: ["Johnson & Johnson", "Kellogg’s", "Kimberly-Clark", "Bayer", "Nestlé", "Goodbaby China", "Franklin Sports", "Movado Group", "Sam’s Club", "Nature’s Way"],
-                products: [{
-                    name: "CommerceIQ AI Platform",
-                    category: "Ecommerce Intelligence & Automation",
-                    description: "Unified AI platform that combines sales, retail media and digital shelf data with role-specific AI teammates to automate ecommerce operations and drive profitable growth across 1450+ retailers.",
-                    features: ["Role-specific AI teammates for different functions", "Unified data integration across retail media and digital shelf", "Automated ecommerce operations", "Coverage across 1450+ retailers globally", "Profitable growth optimization tools", "Real-time performance tracking"]
-                }]
+      // Data for all companies (remains the same as previous version)
+      const companyData = {
+        commerceiq: {
+          name: "CommerceIQ",
+          logo: "https://images.crunchbase.com/image/upload/c_lpad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/zqwllw0ot2egt5imvoph",
+          website: "https://www.commerceiq.ai/",
+          founded: 2012,
+          funding: "$200 million",
+          customers: [
+            "Johnson & Johnson",
+            "Kellogg’s",
+            "Kimberly-Clark",
+            "Bayer",
+            "Nestlé",
+            "Goodbaby China",
+            "Franklin Sports",
+            "Movado Group",
+            "Sam’s Club",
+            "Nature’s Way",
+          ],
+          products: [
+            {
+              name: "CommerceIQ AI Platform",
+              category: "Ecommerce Intelligence & Automation",
+              description:
+                "Unified AI platform that combines sales, retail media and digital shelf data with role-specific AI teammates to automate ecommerce operations and drive profitable growth across 1450+ retailers.",
+              features: [
+                "Role-specific AI teammates for different functions",
+                "Unified data integration across retail media and digital shelf",
+                "Automated ecommerce operations",
+                "Coverage across 1450+ retailers globally",
+                "Profitable growth optimization tools",
+                "Real-time performance tracking",
+              ],
             },
-            mixpanel: {
-                name: "Mixpanel",
-                logo: "https://images.crunchbase.com/image/upload/c_lpad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/v1482425143/m1uhhabauxpe1ptncldy.png",
-                website: "https://mixpanel.com/",
-                founded: 2009,
-                funding: "$277 million",
-                customers: ["Uber (rides & Carshare)", "Airbnb", "Spotify", "Zalora", "Ticketmaster", "ATB Financial", "Winona Health", "Boll & Branch", "KKday"],
-                products: [{
-                    name: "Mixpanel Product Analytics Platform",
-                    category: "Product Analytics",
-                    description: "Event-based product analytics platform that tracks user interactions with web and mobile applications to help teams analyze user behavior, measure engagement, and optimize product experiences in real-time.",
-                    features: ["Event-based tracking system", "Real-time user behavior analysis", "Session replay capabilities", "Advanced segmentation tools", "Conversion funnel analysis", "A/B testing integration", "Custom dashboard creation", "Mobile and web application support"]
-                }]
+          ],
+        },
+        mixpanel: {
+          name: "Mixpanel",
+          logo: "https://images.crunchbase.com/image/upload/c_lpad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/v1482425143/m1uhhabauxpe1ptncldy.png",
+          website: "https://mixpanel.com/",
+          founded: 2009,
+          funding: "$277 million",
+          customers: [
+            "Uber (rides & Carshare)",
+            "Airbnb",
+            "Spotify",
+            "Zalora",
+            "Ticketmaster",
+            "ATB Financial",
+            "Winona Health",
+            "Boll & Branch",
+            "KKday",
+          ],
+          products: [
+            {
+              name: "Mixpanel Product Analytics Platform",
+              category: "Product Analytics",
+              description:
+                "Event-based product analytics platform that tracks user interactions with web and mobile applications to help teams analyze user behavior, measure engagement, and optimize product experiences in real-time.",
+              features: [
+                "Event-based tracking system",
+                "Real-time user behavior analysis",
+                "Session replay capabilities",
+                "Advanced segmentation tools",
+                "Conversion funnel analysis",
+                "A/B testing integration",
+                "Custom dashboard creation",
+                "Mobile and web application support",
+              ],
             },
-            gobblecube: {
-                name: "GobbleCube",
-                logo: "https://media.licdn.com/dms/image/D4D0BAQG7q-y0r7vY_w/company-logo_200_200/0/1689582260651/gobblecube_logo?e=2147483647&v=beta&t=o1f7B8kZ4g5_Y0Z_9n_u8zQ_j8X_k_X_j_k_X_j_k",
-                website: "https://gobblecube.ai/",
-                founded: 2022,
-                funding: "$5.4 million",
-                customers: ["Reckitt", "Tata Consumer", "Nivea", "Johnson & Johnson"],
-                products: [{
-                    name: "GobbleCube AI-Powered Growth Copilot",
-                    category: "Revenue Intelligence & Growth Analytics",
-                    description: "AI-powered revenue acceleration platform that helps consumer brands identify revenue leaks, demand gaps, and high-growth micro-markets by processing billions of locality-level data points to deliver 2-3x growth outcomes.",
-                    features: ["Automated data collection and processing", "AI-driven data processing with machine learning algorithms", "Customizable data pipelines", "Automated root-cause analysis (RCA) capability", "Unified control tower dashboard", "Real-time insights generation", "ISO 27001 and SOC 2 Type II compliance", "Revenue leak detection", "Demand gap identification", "High-growth micro-market discovery"]
-                }]
+          ],
+        },
+        gobblecube: {
+          name: "GobbleCube",
+          logo: "https://media.licdn.com/dms/image/D4D0BAQG7q-y0r7vY_w/company-logo_200_200/0/1689582260651/gobblecube_logo?e=2147483647&v=beta&t=o1f7B8kZ4g5_Y0Z_9n_u8zQ_j8X_k_X_j_k_X_j_k",
+          website: "https://gobblecube.ai/",
+          founded: 2022,
+          funding: "$5.4 million",
+          customers: ["Reckitt", "Tata Consumer", "Nivea", "Johnson & Johnson"],
+          products: [
+            {
+              name: "GobbleCube AI-Powered Growth Copilot",
+              category: "Revenue Intelligence & Growth Analytics",
+              description:
+                "AI-powered revenue acceleration platform that helps consumer brands identify revenue leaks, demand gaps, and high-growth micro-markets by processing billions of locality-level data points to deliver 2-3x growth outcomes.",
+              features: [
+                "Automated data collection and processing",
+                "AI-driven data processing with machine learning algorithms",
+                "Customizable data pipelines",
+                "Automated root-cause analysis (RCA) capability",
+                "Unified control tower dashboard",
+                "Real-time insights generation",
+                "ISO 27001 and SOC 2 Type II compliance",
+                "Revenue leak detection",
+                "Demand gap identification",
+                "High-growth micro-market discovery",
+              ],
             },
-            nielseniq: {
-                name: "NielsenIQ",
-                logo: "https://images.crunchbase.com/image/upload/c_lpad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/d5ymz0frxpiyysr2lxxl",
-                website: "https://nielseniq.com/",
-                founded: 1923,
-                funding: "Not publicly disclosed (Private equity owned by Advent International)",
-                customers: ["Tesco", "AB InBev", "Alamance Foods"],
-                products: [{
-                    name: "NIQ Discover Platform",
-                    category: "Consumer Intelligence & Market Research",
-                    description: "Global consumer intelligence platform that integrates Consumer Panel and Retail measurement data to provide complete, unbiased view of consumer behavior across 95+ countries covering 97% of world GDP.",
-                    features: ["Cloud-based architecture and aggregation engine", "Real-time data accessibility", "Advanced analytical models", "On-demand insights visualization", "Flexible analysis capabilities", "Cross-dimensional data analysis", "Sample size expansion capabilities"]
-                }, {
-                    name: "NIQ Activate",
-                    category: "Retail Collaboration & Activation",
-                    description: "SaaS collaboration solution that integrates NIQ Market Measurement data with retailer's supply chain, customer, and transaction data to enable real-time activation and optimization.",
-                    features: ["Category and Customer Analytics module", "Personalized Offer Management", "Real-time activation capabilities", "Supply chain integration", "Customer data alignment", "Performance measurement tools"]
-                }, {
-                    name: "NIQ Product Insights (NPI)",
-                    category: "Product Intelligence",
-                    description: "Market-leading solution that provides detailed product attributes including dietary, sustainability, and clean label characteristics that consumers search for when shopping, delivering 27,000+ structured product attributes per SKU.",
-                    features: ["27,000+ structured product attributes per SKU", "99% consumer query resolution", "Generative AI technology integration", "Dietary and sustainability insights", "Clean label characteristics", "Global market expansion capabilities"]
-                }, {
-                    name: "NIQ Homescan",
-                    category: "Consumer Panel Services",
-                    description: "Tracks, diagnoses, and analyzes consumer behavior from more than 250,000 households across 25 countries.",
-                    features: ["250,000+ household tracking", "25-country coverage", "Consumer behavior analysis", "Purchase pattern insights", "Household-level data collection"]
-                }, {
-                    name: "NIQ Omnishopper",
-                    category: "Omnichannel Consumer Intelligence",
-                    description: "Captures true online and offline shopping behaviors of consumers across the U.S. marketplace to provide comprehensive omnichannel insights.",
-                    features: ["Online and offline behavior tracking", "Omnichannel journey mapping", "Shopping behavior analysis", "Market-leading intelligence capabilities", "Consumer panel insights integration"]
-                }]
+          ],
+        },
+        nielseniq: {
+          name: "NielsenIQ",
+          logo: "https://images.crunchbase.com/image/upload/c_lpad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/d5ymz0frxpiyysr2lxxl",
+          website: "https://nielseniq.com/",
+          founded: 1923,
+          funding:
+            "Not publicly disclosed (Private equity owned by Advent International)",
+          customers: ["Tesco", "AB InBev", "Alamance Foods"],
+          products: [
+            {
+              name: "NIQ Discover Platform",
+              category: "Consumer Intelligence & Market Research",
+              description:
+                "Global consumer intelligence platform that integrates Consumer Panel and Retail measurement data to provide complete, unbiased view of consumer behavior across 95+ countries covering 97% of world GDP.",
+              features: [
+                "Cloud-based architecture and aggregation engine",
+                "Real-time data accessibility",
+                "Advanced analytical models",
+                "On-demand insights visualization",
+                "Flexible analysis capabilities",
+                "Cross-dimensional data analysis",
+                "Sample size expansion capabilities",
+              ],
             },
-            contentsquare: {
-                name: "ContentSquare",
-                logo: "https://images.crunchbase.com/image/upload/c_lpad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/g1zpebn6qjbxj4w0p41u",
-                website: "https://contentsquare.com/",
-                founded: 2012,
-                funding: "Over $1.4 billion",
-                customers: ["Walmart", "Tiffany & Co.", "Avon", "GoPro", "NatWest", "John Lewis & Partners", "ASICS", "Royal Caribbean", "Ocado Retail", "Admiral"],
-                products: [{
-                    name: "Experience Analytics",
-                    category: "Digital Experience Analytics",
-                    description: "Captures and analyzes user behavior on websites and apps to help teams understand customer journey, optimize conversion rates, and improve user experience.",
-                    features: ["Heat maps and click tracking", "Session replays", "Journey analysis", "Conversion optimization", "Real-time behavior insights", "AI-powered recommendations"]
-                }, {
-                    name: "Product Analytics",
-                    category: "Product Intelligence",
-                    description: "Analyzes and optimizes experiences across both web and mobile apps with multi-channel insights from a single platform.",
-                    features: ["Multi-session journey analysis", "Cross-device tracking", "Product performance insights", "User engagement metrics", "Feature adoption analysis"]
-                }, {
-                    name: "Experience Monitoring",
-                    category: "Digital Performance Monitoring",
-                    description: "Detects errors, slowdowns, and frustrations in real time to proactively find and fix issues before they impact customers.",
-                    features: ["Real-time error detection", "Performance monitoring", "Proactive issue identification", "Customer impact prevention", "Technical issue alerts"]
-                }, {
-                    name: "Voice of Customer",
-                    category: "Customer Feedback Analytics",
-                    description: "AI-powered solution that collects feedback to understand what customers are doing and turns insights into action.",
-                    features: ["AI-powered feedback collection", "Sentiment analysis", "Customer insight generation", "Actionable recommendations", "Real-time feedback processing"]
-                }, {
-                    name: "Mobile App Analytics",
-                    category: "Mobile Experience Intelligence",
-                    description: "Provides instant clarity on who's using mobile apps, what they're doing, and why—with no manual tagging needed.",
-                    features: ["No-tagging data collection", "Real-time mobile insights", "User behavior analysis", "Cross-platform support (iOS, Android, Flutter, React Native)", "Bug and crash detection"]
-                }, {
-                    name: "Benchmarks",
-                    category: "Competitive Intelligence",
-                    description: "Allows brands to compare their user experience against direct competition by analyzing conversion rates, load times, and other key metrics.",
-                    features: ["Competitor comparison analysis", "Industry benchmarking", "Performance metrics comparison", "Market intelligence insights", "Conversion rate analysis"]
-                }]
+            {
+              name: "NIQ Activate",
+              category: "Retail Collaboration & Activation",
+              description:
+                "SaaS collaboration solution that integrates NIQ Market Measurement data with retailer's supply chain, customer, and transaction data to enable real-time activation and optimization.",
+              features: [
+                "Category and Customer Analytics module",
+                "Personalized Offer Management",
+                "Real-time activation capabilities",
+                "Supply chain integration",
+                "Customer data alignment",
+                "Performance measurement tools",
+              ],
             },
-            applause: {
-                name: "Applause",
-                logo: "https://images.crunchbase.com/image/upload/c_lpad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/v1484318093/p4jwcsy2xtzcfwzyzvgt.png",
-                website: "https://www.applause.com/",
-                founded: 2007,
-                funding: "More than $115 million",
-                customers: ["Google", "Amazon", "Microsoft", "Facebook", "Uber", "McDonald’s", "Nike", "Starbucks", "Coca-Cola", "Ford", "BMW", "Disney", "BT", "First Alert", "Nu Skin", "Weber"],
-                products: [{
-                    name: "Applause Testing Platform",
-                    category: "Quality Assurance & Testing",
-                    description: "Enterprise-grade SaaS platform that streamlines testing programs, enables real-time collaboration and provides access to actionable results with global crowdtesting community.",
-                    features: ["Enterprise-grade SaaS platform", "Real-time collaboration tools", "Global crowdtesting community access", "Actionable results reporting", "Integration with development tools", "CI/CD pipeline compatibility"]
-                }, {
-                    name: "Manual Functional Testing",
-                    category: "Software Quality Assurance",
-                    description: "Leverages global community of vetted QA testers to uncover highest-impact issues and deliver actionable results in hours.",
-                    features: ["Global QA tester community", "High-impact issue identification", "Rapid result delivery", "Vetted tester network", "Actionable bug reports"]
-                }, {
-                    name: "Automated Functional Testing",
-                    category: "Test Automation",
-                    description: "Provides community of experienced test engineers, proven methodologies, and established automation framework for faster releases and increased coverage.",
-                    features: ["Experienced automation engineers", "Proven testing methodologies", "Established automation framework", "Faster release cycles", "Increased test coverage"]
-                }, {
-                    name: "Accessibility Testing",
-                    category: "Digital Accessibility",
-                    description: "Human-driven approach to accessibility testing that embeds into development process with assistive technology experts.",
-                    features: ["Human-driven testing approach", "Development process integration", "Assistive technology expertise", "Compliance standards testing", "Actionable remediation guidance"]
-                }, {
-                    name: "Payment Testing",
-                    category: "Financial Transaction Testing",
-                    description: "Enables testing transactions with real payment instruments across the globe to expand into new markets and reduce risk.",
-                    features: ["Real payment instrument testing", "Global market coverage", "Risk reduction capabilities", "Market expansion support", "Transaction flow validation"]
-                }, {
-                    name: "Customer Journey Testing",
-                    category: "User Experience Testing",
-                    description: "Provides holistic view of brand experience across digital and physical channels to test complex journeys and identify friction.",
-                    features: ["Holistic brand experience view", "Multi-channel journey testing", "Friction point identification", "Complex journey validation", "Cross-channel insights"]
-                }]
+            {
+              name: "NIQ Product Insights (NPI)",
+              category: "Product Intelligence",
+              description:
+                "Market-leading solution that provides detailed product attributes including dietary, sustainability, and clean label characteristics that consumers search for when shopping, delivering 27,000+ structured product attributes per SKU.",
+              features: [
+                "27,000+ structured product attributes per SKU",
+                "99% consumer query resolution",
+                "Generative AI technology integration",
+                "Dietary and sustainability insights",
+                "Clean label characteristics",
+                "Global market expansion capabilities",
+              ],
             },
-            rasa: {
-                name: "Rasa",
-                logo: "https://images.crunchbase.com/image/upload/c_lpad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/v1508339832/tqgtuqwfs2b5gni5gb4c.png",
-                website: "https://rasa.com/",
-                founded: 2016,
-                funding: "$73.4 million",
-                customers: ["N26 Bank", "Deutsche Telekom", "American Express", "Raiffeisen Bank", "Orange Telecom", "Otto Group", "Scotiabank"],
-                products: [{
-                    name: "Rasa Pro",
-                    category: "Conversational AI Development",
-                    description: "Framework for building scalable, high-trust conversational AI assistants using large language models (LLMs) with hallucination-free approach and enterprise-grade security.",
-                    features: ["CALM (Conversational AI with Language Models) technology", "Flows for business logic implementation", "Automatic conversation pattern handling", "Hallucination resistance", "Prompt injection protection", "On-premise deployment capability", "Custom component creation"]
-                }, {
-                    name: "Rasa Open Source",
-                    category: "Open Source Conversational AI",
-                    description: "Open source conversational AI platform that allows building and deploying chat and voice-based AI assistants with complete customization control.",
-                    features: ["Open source framework", "Complete customization control", "Natural language understanding (NLU)", "Dialogue management", "Multi-language support", "Python-based development", "Community-driven development"]
-                }, {
-                    name: "Rasa Studio",
-                    category: "No-Code Conversational AI",
-                    description: "No-code graphical user interface for conversational AI practitioners and business users to build, analyze, and improve AI assistants.",
-                    features: ["No-code visual interface", "Visual flow creation", "Business user accessibility", "AI assistant analysis tools", "Collaborative workflow support", "Integration with Rasa Pro"]
-                }, {
-                    name: "Rasa Platform",
-                    category: "Enterprise Conversational AI",
-                    description: "Complete LLM-native enterprise conversational AI platform that combines pro-code extensibility with no-code accessibility for collaborative development.",
-                    features: ["LLM-native architecture", "Pro-code and no-code integration", "Enterprise-grade support", "Collaborative development environment", "Transparent and controllable AI", "Higher satisfaction rates"]
-                }]
+            {
+              name: "NIQ Homescan",
+              category: "Consumer Panel Services",
+              description:
+                "Tracks, diagnoses, and analyzes consumer behavior from more than 250,000 households across 25 countries.",
+              features: [
+                "250,000+ household tracking",
+                "25-country coverage",
+                "Consumer behavior analysis",
+                "Purchase pattern insights",
+                "Household-level data collection",
+              ],
             },
-            intenthq: {
-                name: "Intent HQ",
-                logo: "https://images.crunchbase.com/image/upload/c_lpad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/v1400843283/q509o2y7m0l2q8uprq8g.png",
-                website: "https://intenthq.com/",
-                founded: 2010,
-                funding: "$8 million",
-                customers: ["Verizon", "Orange", "Bayer", "O2 (Telefónica UK)", "Cable Bahamas (REV)", "Evest", "HB Reavis"],
-                products: [{
-                    name: "Intent Lift",
-                    category: "Customer Intelligence",
-                    description: "Generates novel insights using first-party data to improve marketing and business outcomes while guaranteeing privacy.",
-                    features: ["First-party data processing", "Privacy-guaranteed insights", "Marketing outcome improvement", "Business intelligence generation", "Novel insight discovery"]
-                }, {
-                    name: "Intent xChange",
-                    category: "Data Marketplace",
-                    description: "Creates privacy-safe market insights using second and third-party data through cross-industry partnerships and insights marketplace.",
-                    features: ["Second and third-party data utilization", "Privacy-safe processing", "Cross-industry partnerships", "Insights marketplace access", "Market intelligence generation"]
-                }, {
-                    name: "Intent Edge",
-                    category: "Edge AI & Privacy",
-                    description: "First-of-its-kind on-device AI solution that understands users beyond-the-app and engages with them in-the-moment while keeping data on-device.",
-                    features: ["On-device AI processing", "Real-time fraud detection (16,000+ data points)", "Privacy-first architecture", "No cloud dependency", "Lightweight SDK integration", "Real-time engagement capabilities", "Zero personal data collection"]
-                }]
+            {
+              name: "NIQ Omnishopper",
+              category: "Omnichannel Consumer Intelligence",
+              description:
+                "Captures true online and offline shopping behaviors of consumers across the U.S. marketplace to provide comprehensive omnichannel insights.",
+              features: [
+                "Online and offline behavior tracking",
+                "Omnichannel journey mapping",
+                "Shopping behavior analysis",
+                "Market-leading intelligence capabilities",
+                "Consumer panel insights integration",
+              ],
             },
-            piwheel: {
-                name: "PI Wheel",
-                logo: "https://media.licdn.com/dms/image/C4D0BAQG5k9f6k3e_3A/company-logo_200_200/0/1630653609869/pi_wheel_logo?e=2147483647&v=beta&t=T-Y8o8a-8A_z_8o_Z_u_8zQ_j8X_k_X_j_k_X_j_k",
-                website: "https://piwheel.com/",
-                founded: 2019,
-                funding: "Not publicly disclosed",
-                customers: ["Bayer", "Kenvue", "L’Oréal", "Unilever", "Procter & Gamble", "Hisense", "Bosch", "Coca-Cola", "Lipton", "Clorox", "Swiss Arabian", "Mars"],
-                products: [{
-                    name: "Atlas (Marketplace Intelligence)",
-                    category: "Ecommerce Analytics",
-                    description: "Powerful marketplace analytics tool that provides ecommerce market analysis, sales and market share data across entire categories with comprehensive traffic insights.",
-                    features: ["Sales and market share tracking", "Trend analysis and comparison", "Flexible segmentation (SKU, brand, category level)", "Traffic insights (paid, organic, external)", "Keyword trends and search volumes", "Competitor advertising intelligence"]
-                }, {
-                    name: "Drive (Retail Media Automation)",
-                    category: "Advertising Automation",
-                    description: "Intelligent automation tool for scaling ecommerce business with real-time campaign monitoring and optimization using advertising data.",
-                    features: ["Real-time campaign monitoring", "Intelligent automation capabilities", "Performance optimization", "Advertising data utilization", "Campaign scaling tools"]
-                }, {
-                    name: "Beacon (Retail Channel Management)",
-                    category: "Ecommerce Performance Management",
-                    description: "Consolidated dashboard to control entire ecommerce portfolio tracking direct performance across traffic, conversion, sales and inventory.",
-                    features: ["Consolidated portfolio dashboard", "Traffic performance tracking", "Conversion rate monitoring", "Sales performance analysis", "Inventory management", "Single dashboard control"]
-                }, {
-                    name: "Omni (Digital Shelf Analytics)",
-                    category: "Omnichannel Analytics",
-                    description: "Maximizes performance on both digital marketplaces and brick & mortar stores with universal coverage for complete product visibility and shopper behavior analysis.",
-                    features: ["Digital and physical retail coverage", "Organic and paid share of shelf tracking", "Pricing and promotion visibility", "Real-time inventory monitoring", "Content and catalog management", "Geo-level pricing insights", "Fulfillment time analysis"]
-                }, {
-                    name: "CDP (Unified Customer Data Platform)",
-                    category: "Customer Data Management",
-                    description: "Advanced platform that gathers and consolidates customer profiles, defines dynamic audiences, and enables real-time engagement.",
-                    features: ["Customer profile consolidation", "Dynamic audience segmentation", "Real-time engagement capabilities", "Unified data platform", "Customer journey mapping"]
-                }, {
-                    name: "Performance Insights",
-                    category: "Business Intelligence & Consulting",
-                    description: "Comprehensive analysis service providing in-depth understanding of ecommerce business through detailed performance reports and consultancy recommendations.",
-                    features: ["Performance report generation", "Brand sales analysis", "Market dynamics assessment", "Product lifecycle examination", "Consultancy recommendations", "Growth optimization insights", "Assortment and pricing strategy analysis"]
-                }]
-            }
-        };
+          ],
+        },
+        contentsquare: {
+          name: "ContentSquare",
+          logo: "https://images.crunchbase.com/image/upload/c_lpad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/g1zpebn6qjbxj4w0p41u",
+          website: "https://contentsquare.com/",
+          founded: 2012,
+          funding: "Over $1.4 billion",
+          customers: [
+            "Walmart",
+            "Tiffany & Co.",
+            "Avon",
+            "GoPro",
+            "NatWest",
+            "John Lewis & Partners",
+            "ASICS",
+            "Royal Caribbean",
+            "Ocado Retail",
+            "Admiral",
+          ],
+          products: [
+            {
+              name: "Experience Analytics",
+              category: "Digital Experience Analytics",
+              description:
+                "Captures and analyzes user behavior on websites and apps to help teams understand customer journey, optimize conversion rates, and improve user experience.",
+              features: [
+                "Heat maps and click tracking",
+                "Session replays",
+                "Journey analysis",
+                "Conversion optimization",
+                "Real-time behavior insights",
+                "AI-powered recommendations",
+              ],
+            },
+            {
+              name: "Product Analytics",
+              category: "Product Intelligence",
+              description:
+                "Analyzes and optimizes experiences across both web and mobile apps with multi-channel insights from a single platform.",
+              features: [
+                "Multi-session journey analysis",
+                "Cross-device tracking",
+                "Product performance insights",
+                "User engagement metrics",
+                "Feature adoption analysis",
+              ],
+            },
+            {
+              name: "Experience Monitoring",
+              category: "Digital Performance Monitoring",
+              description:
+                "Detects errors, slowdowns, and frustrations in real time to proactively find and fix issues before they impact customers.",
+              features: [
+                "Real-time error detection",
+                "Performance monitoring",
+                "Proactive issue identification",
+                "Customer impact prevention",
+                "Technical issue alerts",
+              ],
+            },
+            {
+              name: "Voice of Customer",
+              category: "Customer Feedback Analytics",
+              description:
+                "AI-powered solution that collects feedback to understand what customers are doing and turns insights into action.",
+              features: [
+                "AI-powered feedback collection",
+                "Sentiment analysis",
+                "Customer insight generation",
+                "Actionable recommendations",
+                "Real-time feedback processing",
+              ],
+            },
+            {
+              name: "Mobile App Analytics",
+              category: "Mobile Experience Intelligence",
+              description:
+                "Provides instant clarity on who's using mobile apps, what they're doing, and why—with no manual tagging needed.",
+              features: [
+                "No-tagging data collection",
+                "Real-time mobile insights",
+                "User behavior analysis",
+                "Cross-platform support (iOS, Android, Flutter, React Native)",
+                "Bug and crash detection",
+              ],
+            },
+            {
+              name: "Benchmarks",
+              category: "Competitive Intelligence",
+              description:
+                "Allows brands to compare their user experience against direct competition by analyzing conversion rates, load times, and other key metrics.",
+              features: [
+                "Competitor comparison analysis",
+                "Industry benchmarking",
+                "Performance metrics comparison",
+                "Market intelligence insights",
+                "Conversion rate analysis",
+              ],
+            },
+          ],
+        },
+        applause: {
+          name: "Applause",
+          logo: "https://images.crunchbase.com/image/upload/c_lpad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/v1484318093/p4jwcsy2xtzcfwzyzvgt.png",
+          website: "https://www.applause.com/",
+          founded: 2007,
+          funding: "More than $115 million",
+          customers: [
+            "Google",
+            "Amazon",
+            "Microsoft",
+            "Facebook",
+            "Uber",
+            "McDonald’s",
+            "Nike",
+            "Starbucks",
+            "Coca-Cola",
+            "Ford",
+            "BMW",
+            "Disney",
+            "BT",
+            "First Alert",
+            "Nu Skin",
+            "Weber",
+          ],
+          products: [
+            {
+              name: "Applause Testing Platform",
+              category: "Quality Assurance & Testing",
+              description:
+                "Enterprise-grade SaaS platform that streamlines testing programs, enables real-time collaboration and provides access to actionable results with global crowdtesting community.",
+              features: [
+                "Enterprise-grade SaaS platform",
+                "Real-time collaboration tools",
+                "Global crowdtesting community access",
+                "Actionable results reporting",
+                "Integration with development tools",
+                "CI/CD pipeline compatibility",
+              ],
+            },
+            {
+              name: "Manual Functional Testing",
+              category: "Software Quality Assurance",
+              description:
+                "Leverages global community of vetted QA testers to uncover highest-impact issues and deliver actionable results in hours.",
+              features: [
+                "Global QA tester community",
+                "High-impact issue identification",
+                "Rapid result delivery",
+                "Vetted tester network",
+                "Actionable bug reports",
+              ],
+            },
+            {
+              name: "Automated Functional Testing",
+              category: "Test Automation",
+              description:
+                "Provides community of experienced test engineers, proven methodologies, and established automation framework for faster releases and increased coverage.",
+              features: [
+                "Experienced automation engineers",
+                "Proven testing methodologies",
+                "Established automation framework",
+                "Faster release cycles",
+                "Increased test coverage",
+              ],
+            },
+            {
+              name: "Accessibility Testing",
+              category: "Digital Accessibility",
+              description:
+                "Human-driven approach to accessibility testing that embeds into development process with assistive technology experts.",
+              features: [
+                "Human-driven testing approach",
+                "Development process integration",
+                "Assistive technology expertise",
+                "Compliance standards testing",
+                "Actionable remediation guidance",
+              ],
+            },
+            {
+              name: "Payment Testing",
+              category: "Financial Transaction Testing",
+              description:
+                "Enables testing transactions with real payment instruments across the globe to expand into new markets and reduce risk.",
+              features: [
+                "Real payment instrument testing",
+                "Global market coverage",
+                "Risk reduction capabilities",
+                "Market expansion support",
+                "Transaction flow validation",
+              ],
+            },
+            {
+              name: "Customer Journey Testing",
+              category: "User Experience Testing",
+              description:
+                "Provides holistic view of brand experience across digital and physical channels to test complex journeys and identify friction.",
+              features: [
+                "Holistic brand experience view",
+                "Multi-channel journey testing",
+                "Friction point identification",
+                "Complex journey validation",
+                "Cross-channel insights",
+              ],
+            },
+          ],
+        },
+        rasa: {
+          name: "Rasa",
+          logo: "https://images.crunchbase.com/image/upload/c_lpad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/v1508339832/tqgtuqwfs2b5gni5gb4c.png",
+          website: "https://rasa.com/",
+          founded: 2016,
+          funding: "$73.4 million",
+          customers: [
+            "N26 Bank",
+            "Deutsche Telekom",
+            "American Express",
+            "Raiffeisen Bank",
+            "Orange Telecom",
+            "Otto Group",
+            "Scotiabank",
+          ],
+          products: [
+            {
+              name: "Rasa Pro",
+              category: "Conversational AI Development",
+              description:
+                "Framework for building scalable, high-trust conversational AI assistants using large language models (LLMs) with hallucination-free approach and enterprise-grade security.",
+              features: [
+                "CALM (Conversational AI with Language Models) technology",
+                "Flows for business logic implementation",
+                "Automatic conversation pattern handling",
+                "Hallucination resistance",
+                "Prompt injection protection",
+                "On-premise deployment capability",
+                "Custom component creation",
+              ],
+            },
+            {
+              name: "Rasa Open Source",
+              category: "Open Source Conversational AI",
+              description:
+                "Open source conversational AI platform that allows building and deploying chat and voice-based AI assistants with complete customization control.",
+              features: [
+                "Open source framework",
+                "Complete customization control",
+                "Natural language understanding (NLU)",
+                "Dialogue management",
+                "Multi-language support",
+                "Python-based development",
+                "Community-driven development",
+              ],
+            },
+            {
+              name: "Rasa Studio",
+              category: "No-Code Conversational AI",
+              description:
+                "No-code graphical user interface for conversational AI practitioners and business users to build, analyze, and improve AI assistants.",
+              features: [
+                "No-code visual interface",
+                "Visual flow creation",
+                "Business user accessibility",
+                "AI assistant analysis tools",
+                "Collaborative workflow support",
+                "Integration with Rasa Pro",
+              ],
+            },
+            {
+              name: "Rasa Platform",
+              category: "Enterprise Conversational AI",
+              description:
+                "Complete LLM-native enterprise conversational AI platform that combines pro-code extensibility with no-code accessibility for collaborative development.",
+              features: [
+                "LLM-native architecture",
+                "Pro-code and no-code integration",
+                "Enterprise-grade support",
+                "Collaborative development environment",
+                "Transparent and controllable AI",
+                "Higher satisfaction rates",
+              ],
+            },
+          ],
+        },
+        intenthq: {
+          name: "Intent HQ",
+          logo: "https://images.crunchbase.com/image/upload/c_lpad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/v1400843283/q509o2y7m0l2q8uprq8g.png",
+          website: "https://intenthq.com/",
+          founded: 2010,
+          funding: "$8 million",
+          customers: [
+            "Verizon",
+            "Orange",
+            "Bayer",
+            "O2 (Telefónica UK)",
+            "Cable Bahamas (REV)",
+            "Evest",
+            "HB Reavis",
+          ],
+          products: [
+            {
+              name: "Intent Lift",
+              category: "Customer Intelligence",
+              description:
+                "Generates novel insights using first-party data to improve marketing and business outcomes while guaranteeing privacy.",
+              features: [
+                "First-party data processing",
+                "Privacy-guaranteed insights",
+                "Marketing outcome improvement",
+                "Business intelligence generation",
+                "Novel insight discovery",
+              ],
+            },
+            {
+              name: "Intent xChange",
+              category: "Data Marketplace",
+              description:
+                "Creates privacy-safe market insights using second and third-party data through cross-industry partnerships and insights marketplace.",
+              features: [
+                "Second and third-party data utilization",
+                "Privacy-safe processing",
+                "Cross-industry partnerships",
+                "Insights marketplace access",
+                "Market intelligence generation",
+              ],
+            },
+            {
+              name: "Intent Edge",
+              category: "Edge AI & Privacy",
+              description:
+                "First-of-its-kind on-device AI solution that understands users beyond-the-app and engages with them in-the-moment while keeping data on-device.",
+              features: [
+                "On-device AI processing",
+                "Real-time fraud detection (16,000+ data points)",
+                "Privacy-first architecture",
+                "No cloud dependency",
+                "Lightweight SDK integration",
+                "Real-time engagement capabilities",
+                "Zero personal data collection",
+              ],
+            },
+          ],
+        },
+        piwheel: {
+          name: "PI Wheel",
+          logo: "https://media.licdn.com/dms/image/C4D0BAQG5k9f6k3e_3A/company-logo_200_200/0/1630653609869/pi_wheel_logo?e=2147483647&v=beta&t=T-Y8o8a-8A_z_8o_Z_u_8zQ_j8X_k_X_j_k_X_j_k",
+          website: "https://piwheel.com/",
+          founded: 2019,
+          funding: "Not publicly disclosed",
+          customers: [
+            "Bayer",
+            "Kenvue",
+            "L’Oréal",
+            "Unilever",
+            "Procter & Gamble",
+            "Hisense",
+            "Bosch",
+            "Coca-Cola",
+            "Lipton",
+            "Clorox",
+            "Swiss Arabian",
+            "Mars",
+          ],
+          products: [
+            {
+              name: "Atlas (Marketplace Intelligence)",
+              category: "Ecommerce Analytics",
+              description:
+                "Powerful marketplace analytics tool that provides ecommerce market analysis, sales and market share data across entire categories with comprehensive traffic insights.",
+              features: [
+                "Sales and market share tracking",
+                "Trend analysis and comparison",
+                "Flexible segmentation (SKU, brand, category level)",
+                "Traffic insights (paid, organic, external)",
+                "Keyword trends and search volumes",
+                "Competitor advertising intelligence",
+              ],
+            },
+            {
+              name: "Drive (Retail Media Automation)",
+              category: "Advertising Automation",
+              description:
+                "Intelligent automation tool for scaling ecommerce business with real-time campaign monitoring and optimization using advertising data.",
+              features: [
+                "Real-time campaign monitoring",
+                "Intelligent automation capabilities",
+                "Performance optimization",
+                "Advertising data utilization",
+                "Campaign scaling tools",
+              ],
+            },
+            {
+              name: "Beacon (Retail Channel Management)",
+              category: "Ecommerce Performance Management",
+              description:
+                "Consolidated dashboard to control entire ecommerce portfolio tracking direct performance across traffic, conversion, sales and inventory.",
+              features: [
+                "Consolidated portfolio dashboard",
+                "Traffic performance tracking",
+                "Conversion rate monitoring",
+                "Sales performance analysis",
+                "Inventory management",
+                "Single dashboard control",
+              ],
+            },
+            {
+              name: "Omni (Digital Shelf Analytics)",
+              category: "Omnichannel Analytics",
+              description:
+                "Maximizes performance on both digital marketplaces and brick & mortar stores with universal coverage for complete product visibility and shopper behavior analysis.",
+              features: [
+                "Digital and physical retail coverage",
+                "Organic and paid share of shelf tracking",
+                "Pricing and promotion visibility",
+                "Real-time inventory monitoring",
+                "Content and catalog management",
+                "Geo-level pricing insights",
+                "Fulfillment time analysis",
+              ],
+            },
+            {
+              name: "CDP (Unified Customer Data Platform)",
+              category: "Customer Data Management",
+              description:
+                "Advanced platform that gathers and consolidates customer profiles, defines dynamic audiences, and enables real-time engagement.",
+              features: [
+                "Customer profile consolidation",
+                "Dynamic audience segmentation",
+                "Real-time engagement capabilities",
+                "Unified data platform",
+                "Customer journey mapping",
+              ],
+            },
+            {
+              name: "Performance Insights",
+              category: "Business Intelligence & Consulting",
+              description:
+                "Comprehensive analysis service providing in-depth understanding of ecommerce business through detailed performance reports and consultancy recommendations.",
+              features: [
+                "Performance report generation",
+                "Brand sales analysis",
+                "Market dynamics assessment",
+                "Product lifecycle examination",
+                "Consultancy recommendations",
+                "Growth optimization insights",
+                "Assortment and pricing strategy analysis",
+              ],
+            },
+          ],
+        },
+      };
 
-        // DOM Elements
-        const contentArea = document.getElementById('analysis-content');
-        const tabs = document.querySelectorAll('.company-tab');
+      // DOM Elements
+      const contentArea = document.getElementById("analysis-content");
+      const tabs = document.querySelectorAll(".company-tab");
 
-        // Function to render company content
-        function renderCompany(companyKey) {
-            const company = companyData[companyKey];
-            if (!company) return;
+      // Function to render company content
+      function renderCompany(companyKey) {
+        const company = companyData[companyKey];
+        if (!company) return;
 
-            const productsHtml = company.products.map((product, index) => `
+        const productsHtml = company.products
+          .map(
+            (product, index) => `
                 <div class="bg-gray-900/50 rounded-lg mb-4 border border-gray-800">
                     <div class="product-accordion-header flex justify-between items-center p-4 sm:p-5">
                         <h4 class="text-xl font-bold text-white">
@@ -379,35 +826,61 @@
                         </h4>
                         <svg class="w-6 h-6 text-gray-400 icon-rotate" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </div>
-                    <div class="product-accordion-content ${index === 0 ? 'open' : ''} px-4 sm:px-5 pb-5">
-                        <p class="text-sm text-yellow-400 font-medium mb-3 tracking-wider">${product.category}</p>
-                        <p class="text-gray-300 mb-4 leading-relaxed">${product.description}</p>
+                    <div class="product-accordion-content ${
+                      index === 0 ? "open" : ""
+                    } px-4 sm:px-5 pb-5">
+                        <p class="text-sm text-yellow-400 font-medium mb-3 tracking-wider">${
+                          product.category
+                        }</p>
+                        <p class="text-gray-300 mb-4 leading-relaxed">${
+                          product.description
+                        }</p>
                         <h5 class="font-semibold text-white mb-3">Key Features:</h5>
                         <ul class="space-y-2 text-gray-300 pl-5 list-disc prose-custom">
-                            ${product.features.map(feature => `<li>${feature}</li>`).join('')}
+                            ${product.features
+                              .map((feature) => `<li>${feature}</li>`)
+                              .join("")}
                         </ul>
                     </div>
                 </div>
-            `).join('');
+            `
+          )
+          .join("");
 
-            // Customers HTML
-            const customersHtml = company.customers && company.customers.length ? `
+        // Customers HTML
+        const customersHtml =
+          company.customers && company.customers.length
+            ? `
                 <div class="bg-gray-900/50 p-4 rounded-lg border border-gray-800 mb-8">
                     <h3 class="text-2xl font-bold text-yellow-400 mb-2">Known Customers</h3>
                     <ul class="flex flex-wrap gap-2">
-                        ${company.customers.map(cust => `<li class="bg-gray-800 text-gray-200 px-3 py-1 rounded-full text-sm mb-1">${cust}</li>`).join('')}
+                        ${company.customers
+                          .map(
+                            (cust) =>
+                              `<li class="bg-gray-800 text-gray-200 px-3 py-1 rounded-full text-sm mb-1">${cust}</li>`
+                          )
+                          .join("")}
                     </ul>
                 </div>
-            ` : '';
+            `
+            : "";
 
-            contentArea.innerHTML = `
+        contentArea.innerHTML = `
                 <div class="company-content fade-in bg-[#1a1a1a] p-6 rounded-lg shadow-2xl border border-gray-800">
                     <!-- Company Header -->
                     <div class="flex flex-col sm:flex-row items-start sm:items-center mb-6">
-                        <img src="${company.logo}" alt="${company.name} Logo" class="h-16 w-16 object-contain bg-white p-2 rounded-lg mb-4 sm:mb-0 sm:mr-6 shadow-md" onerror="this.onerror=null;this.src='https://placehold.co/64x64/ffffff/1a1a1a?text=${company.name.charAt(0)}';">
+                        <img src="${company.logo}" alt="${
+          company.name
+        } Logo" class="h-16 w-16 object-contain bg-white p-2 rounded-lg mb-4 sm:mb-0 sm:mr-6 shadow-md" onerror="this.onerror=null;this.src='https://placehold.co/64x64/ffffff/1a1a1a?text=${company.name.charAt(
+          0
+        )}';">
                         <div>
-                            <h2 class="text-4xl font-bold text-white">${company.name}</h2>
-                            <a href="${company.website}" target="_blank" rel="noopener noreferrer" class="text-yellow-400 hover:text-yellow-300 transition-colors duration-300 text-sm">
+                            <h2 class="text-4xl font-bold text-white">${
+                              company.name
+                            }</h2>
+                            <a href="${
+                              company.website
+                            }" target="_blank" rel="noopener noreferrer" class="text-yellow-400 hover:text-yellow-300 transition-colors duration-300 text-sm">
                                 ${company.website}
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                             </a>
@@ -418,20 +891,20 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                         <div class="bg-gray-900/50 p-4 rounded-lg border border-gray-800">
                             <p class="text-sm text-gray-400">Founded</p>
-                            <p class="text-2xl font-bold text-white">${company.founded}</p>
+                            <p class="text-2xl font-bold text-white">${
+                              company.founded
+                            }</p>
                         </div>
                         <div class="bg-gray-900/50 p-4 rounded-lg border border-gray-800">
                             <p class="text-sm text-gray-400">Total Funding</p>
-                            <p class="text-2xl font-bold text-white">${company.funding}</p>
+                            <p class="text-2xl font-bold text-white">${
+                              company.funding
+                            }</p>
                         </div>
                     </div>
 
                     <!-- Customers Section -->
                     ${customersHtml}
-
-                    <!-- Products Section -->
-                    <h3 class="text-3xl font-bold text-white mb-4 border-b border-gray-700 pb-2">Products</h3>
-                    <div>${productsHtml}</div>
 
                     <!-- Product Feedback & Customer Sentiment Section -->
                     <div class="bg-gray-900/50 p-4 rounded-lg border border-gray-800 mb-8">
@@ -439,260 +912,189 @@
                         <div id="company-feedback"></div>
                     </div>
 
-                    <!-- Feature-Level Usage Analysis Section -->
-                    <div class="bg-gray-900/50 p-4 rounded-lg border border-gray-800 mb-8">
-                        <h3 class="text-2xl font-bold text-blue-400 mb-2">Feature-Level Usage Analysis</h3>
-                        <div id="company-feature-usage"></div>
-                    </div>
+                    <!-- Products Section -->
+                    <h3 class="text-3xl font-bold text-white mb-4 border-b border-gray-700 pb-2">Products</h3>
+                    <div>${productsHtml}</div>
                 </div>
             `;
-            renderCompanyFeedback(companyKey);
-            renderCompanyFeatureUsage(companyKey);
-            addAccordionListeners();
-        }
+        renderCompanyFeedback(companyKey);
+        addAccordionListeners();
+      }
 
-        // Function to handle tab clicks
-        function handleTabClick(e) {
-            tabs.forEach(tab => tab.classList.remove('active'));
-            e.target.classList.add('active');
-            const companyKey = e.target.dataset.company;
-            renderCompany(companyKey);
-        }
+      // Function to handle tab clicks
+      function handleTabClick(e) {
+        tabs.forEach((tab) => tab.classList.remove("active"));
+        e.target.classList.add("active");
+        const companyKey = e.target.dataset.company;
+        renderCompany(companyKey);
+      }
 
-        // Function to add listeners to accordions
-        function addAccordionListeners() {
-            const accordions = document.querySelectorAll('.product-accordion-header');
-            accordions.forEach(accordion => {
-                const content = accordion.nextElementSibling;
-                const icon = accordion.querySelector('svg');
-                
-                // Set initial state for the first item
-                if (content.classList.contains('open')) {
-                    icon.classList.add('rotate-180');
-                }
+      // Function to add listeners to accordions
+      function addAccordionListeners() {
+        const accordions = document.querySelectorAll(
+          ".product-accordion-header"
+        );
+        accordions.forEach((accordion) => {
+          const content = accordion.nextElementSibling;
+          const icon = accordion.querySelector("svg");
 
-                accordion.addEventListener('click', () => {
-                    content.classList.toggle('open');
-                    icon.classList.toggle('rotate-180');
-                });
-            });
-        }
+          // Set initial state for the first item
+          if (content.classList.contains("open")) {
+            icon.classList.add("rotate-180");
+          }
 
-        // Add feedback data for each company
-        const companyFeedback = {
-            commerceiq: {
-                strengths: [
-                    "Powerful for monitoring Amazon 1P performance with an intuitive dashboard.",
-                    "Customer Success team is praised for proactive, tailored support.",
-                    "Strong at consolidating sales, retail media, and digital shelf data.",
-                    "Improves forecasting and fulfillment; dashboards provide deep insight into POs, forecasts, and demand shifts."
-                ],
-                painPoints: [
-                    "Data export process requires significant manual cleaning for Excel, which can be time-consuming.",
-                    "Some users report minor friction with initial setup and technical customizations.",
-                    "Employee feedback notes room for improvement in work culture and internal communications."
-                ],
-                sentiment: "Generally trusted by large brands for ecommerce operations and praised for responsive support, though usability and data portability are areas for enhancement."
-            },
-            mixpanel: {
-                strengths: [
-                    "Real-time insights; strong event-based analytics for user behavior and retention.",
-                    "Easy setup and data visualizations; intuitive UX for non-technical and technical users alike.",
-                    "Funnels, segmentation, and dashboards are robust and highly useful.",
-                    "Seen as reliable and continually improving, favored by product and marketing managers."
-                ],
-                painPoints: [
-                    "Advanced setup (custom events) may require developer involvement.",
-                    "Some features can be hidden or take time to discover in the interface.",
-                    "Pricing can escalate for high event volumes or growing teams, challenging for smaller businesses.",
-                    "Integrations with other tools sometimes incomplete."
-                ],
-                sentiment: "Widely recommended for clear analytics and user insights, but teams should budget for potential pricing jumps and ensure developer access for full customization."
-            },
-            gobblecube: {
-                strengths: [
-                    "Speeds up meal prep dramatically (classic Gobble customer reviews highlight very fast, easy meal kit setup).",
-                    "Quality of food is generally appreciated; selection accommodates dietary needs."
-                ],
-                painPoints: [
-                    "Multiple customer complaints about customer service: slow replies, lack of meaningful support for billing/shipment issues, and difficulty resolving spoiled/incorrect food deliveries.",
-                    "Recurrent concerns about auto-billing and quality control in shipments.",
-                    "Some users see the service as 'scammy' in its handling of credits and refund requests."
-                ],
-                sentiment: "Quick and tasty meals, but customer service and billing practices receive significant criticism, causing dissatisfaction and distrust among some users."
-            },
-            nielseniq: {
-                strengths: [
-                    "Delivers global, comprehensive purchase behavior intelligence.",
-                    "Some panelists praise the data depth and find long-term value in consistent surveying."
-                ],
-                painPoints: [
-                    "Major frustration around customer service: slow, repetitive calls, account lockouts, overbearing survey requirements, and cumbersome rewards redemption.",
-                    "Frequent technical issues with their app and point systems.",
-                    "Perceived as invasive; users report constant reminders and high friction earning/redeeming rewards."
-                ],
-                sentiment: "Respected for large-scale market data, but consumer panel experiences are hampered by poor app usability, reward issues, and aggressive follow-ups."
-            },
-            contentsquare: {
-                strengths: [
-                    "Top marks for visualizing user behavior, heatmaps, and rapid root-cause analysis of digital journeys.",
-                    "AI-powered insights (Sense) and customer success/support teams are highly praised for responsiveness and onboarding help.",
-                    "Empowers quick discovery of conversion issues and actionable insights."
-                ],
-                painPoints: [
-                    "Learning curve: some features require development resources to implement fully.",
-                    "Price is relatively high compared to industry peers.",
-                    "New users can find configuration and prioritization for dev resources challenging."
-                ],
-                sentiment: "Powerful, highly visual, and transformative for digital analytics teams—though clients note a steep learning curve and wish for lower barriers to advanced feature access."
-            },
-            applause: {
-                strengths: [
-                    "Real-world QA and UX feedback from a global crowd; known for high-quality, actionable bug reports.",
-                    "Quick response times from support; professional, vetted testers.",
-                    "Customer-centric, always seeking product/service improvement based on client feedback."
-                ],
-                painPoints: [
-                    "Service can be expensive for intensive or continual testing.",
-                    "Platform maintenance (keeping up with spreadsheets and video bug submissions) can be cumbersome.",
-                    "Some users request more flexible usage models and easier video workflow."
-                ],
-                sentiment: "Valued partner for QA and usability testing; responsiveness and expertise drive confidence, though pricing and technical workflow could be smoother."
-            },
-            rasa: {
-                strengths: [
-                    "Highly customizable conversational AI with open source benefits.",
-                    "Praised especially for helping brands move away from 'black-box' AI; customers value the control and flexibility.",
-                    "Engaged developer community and informative content bolster adoption."
-                ],
-                painPoints: [
-                    "Learning curve for non-developers; some products (like Studio) aim to narrow this, but reviewers say technical expertise is still important.",
-                    "Taste preferences for beverage (if searching for the coffee-alternative product, not the conversational AI), can also be divisive, but AI product feedback is mostly positive regarding features and support."
-                ],
-                sentiment: "Respected for powerful, transparent AI tooling—great for enterprises seeking control, though not fully plug-and-play for every team."
-            },
-            intenthq: {
-                strengths: [
-                    "Privacy-first focus stands out; valued for first-party data insights and advanced segmentation.",
-                    "Flexible for use in telco and retail, enabling personalized marketing."
-                ],
-                painPoints: [
-                    "Public-facing product reviews are extremely limited.",
-                    "Employee feedback appreciates mission but indicates company communications and operational structure could improve."
-                ],
-                sentiment: "Good reputation in specialist sectors, especially for privacy and granular analytics, but lacks substantial third-party product review data."
-            },
-            piwheel: {
-                strengths: [
-                    "Provides actionable insights into ecommerce performance and market dynamics.",
-                    "Notably used by major brands for market share, pricing, and assortment intelligence."
-                ],
-                painPoints: [
-                    "Minimal third-party review coverage; little customer critique or independent feedback found publicly."
-                ],
-                sentiment: "Generally positive adoption among multinational consumer brands, but a lack of direct user reviews limits insight into specific strengths or weaknesses."
-            }
-        };
+          accordion.addEventListener("click", () => {
+            content.classList.toggle("open");
+            icon.classList.toggle("rotate-180");
+          });
+        });
+      }
 
-        // Add feature usage data for each company
-        const companyFeatureUsage = {
-            commerceiq: {
-                mostUsed: [
-                    "Reporting Dashboards: Widely used for consolidating KPIs such as ad impressions, click-through rates, and sales, enabling real-time business review.",
-                    "AI Recommendations: Frequently utilized to optimize supply chain operations, recover lost revenue, and manage inventory with actionable insights.",
-                    "Share of Voice & Shelf Monitoring: Popular for spotting competitive gaps and tracking product visibility across retailers.",
-                    "Digital Shelf Optimization: High adoption for monitoring out-of-stock SKUs and automating issue detection."
-                ],
-                trends: "Dashboards and automated reporting are daily tools for sales/marketing teams, while AI-driven supply chain and ad optimization see regular, campaign-based engagement."
-            },
-            mixpanel: {
-                mostUsed: [
-                    "Funnels & Conversion Tracking: Core for tracking user journey steps and conversion bottlenecks, especially among product teams.",
-                    "Event-Based Segmentation and Cohort Analysis: Highly utilized for behavioral segmentation and understanding user retention.",
-                    "User Activity Metrics (DAU/WAU/MAU): Regularly referenced for engagement measurements.",
-                    "Dashboards & Data Visualization: Key for presenting real-time insights to stakeholders.",
-                    "A/B Testing & Reporting: Event segmentation and reporting are consistently leveraged in experimentation scenarios."
-                ],
-                trends: "Funnels, segmentation, and dashboards are the most actively used features. Teams regularly rely on customizable analytics and reporting for ongoing product optimization."
-            },
-            gobblecube: {
-                mostUsed: [
-                    "Automated Data Collection & Customizable Data Pipelines: Heavily relied on to unify fragmented data for growth analytics and reduce manual effort.",
-                    "Automated Root-Cause Analysis (RCA): Frequently used for fast issue detection when performance dips.",
-                    "Unified Control Tower Dashboard: Central feature for real-time performance monitoring and insights delivery.",
-                    "AI-Driven Data Processing & Reporting: Regularly engaged for trend visualization and anomaly detection in revenue data."
-                ],
-                trends: "Automated workflows and dashboards are mainstays. RCA is invoked for troubleshooting and strategic adjustments."
-            },
-            nielseniq: {
-                mostUsed: [
-                    "Purchase Behavior Analytics & Market Data: Regularly accessed by clients for comprehensive transaction and product attribute analysis.",
-                    "Consumer Segmentation Models: Used frequently for refining target audience and product testing.",
-                    "Personalization & Feedback Survey Tools: Support ongoing customer engagement and longitudinal studies.",
-                    "Custom Reports & Insights Visualization: Common for campaign planning and market performance evaluation."
-                ],
-                trends: "Clients rely most on market/consumer analytics and segmentation features for core research, while custom reporting is essential for tailored insight delivery."
-            },
-            contentsquare: {
-                mostUsed: [
-                    "Autocapture & Behavioral Analytics: Heavily used for automatically gathering all user interactions without manual tagging.",
-                    "Heatmaps: Core tool for visualizing page-level and element-specific user engagement.",
-                    "Session Replay & Journey Analysis: Frequently accessed for root-cause analysis and UX audits.",
-                    "AI Insights & Voice of Customer: Popular for identifying patterns and overlaying quantitative/qualitative data."
-                ],
-                trends: "Heatmaps, session replays, and journey analysis see daily use among digital teams. AI-powered recommendations are often cited as transformative for optimization."
-            },
-            applause: {
-                mostUsed: [
-                    "Manual and Automated Testing Platforms: Used for rapid bug detection and regression checks, cornerstone features for QA teams.",
-                    "Crowdtesting & Real-World Feedback Loops: Engaged for enhancing app quality with global user input.",
-                    "App Analytics & Sentiment Measurement: Popular for extracting actionable feedback from millions of user reviews."
-                ],
-                trends: "Testing platforms and analytics tools are top daily drivers, with competitive benchmarking and workflow features also significantly leveraged."
-            },
-            rasa: {
-                mostUsed: [
-                    "Intent Recognition & NLU Engines: Utilized most by enterprises for customizable conversational flows.",
-                    "Pro-Code and No-Code Development Options (Rasa Pro, Rasa Studio): Frequently used in tandem for team collaboration.",
-                    "Open Source Custom Components: Extensively used by technical teams seeking flexibility.",
-                    "Telemetry & Feature Usage Analytics: Offers deep observability for optimizing deployment and usage."
-                ],
-                trends: "Customizable pipelines and intent handling are heavily used. Feature usage analytics help teams prioritize which NLU/response components to optimize."
-            },
-            intenthq: {
-                mostUsed: [
-                    "AI-Driven Customer Segmentation: Widely used for highly targeted marketing and customer engagement.",
-                    "Real-Time Insights & Predictive Analytics: Main feature for adapting strategies to evolving customer behaviors.",
-                    "Churn Prediction & Lifetime Value Analysis: Frequently leveraged for retention and upsell initiatives."
-                ],
-                trends: "Segmentation, predictive, and real-time insight capabilities are in constant use for campaign planning and customer understanding."
-            },
-            piwheel: {
-                mostUsed: [
-                    "Marketplace Intelligence Dashboards: Central tool for brands tracking sales, market share, and category performance.",
-                    "Ad Automation & Campaign Monitoring: Used for optimizing spend and monitoring advertising efficacy.",
-                    "Digital Shelf Analytics & Performance Reports: Key for competitive benchmarking and inventory optimization."
-                ],
-                trends: "Performance dashboards, ad automation, and digital shelf analytics are the primary, high-usage features across customer teams."
-            }
-        };
+      // Add feedback data for each company
+      const companyFeedback = {
+        commerceiq: {
+          strengths: [
+            "Powerful for monitoring Amazon 1P performance with an intuitive dashboard.",
+            "Customer Success team is praised for proactive, tailored support.",
+            "Strong at consolidating sales, retail media, and digital shelf data.",
+            "Improves forecasting and fulfillment; dashboards provide deep insight into POs, forecasts, and demand shifts.",
+          ],
+          painPoints: [
+            "Data export process requires significant manual cleaning for Excel, which can be time-consuming.",
+            "Some users report minor friction with initial setup and technical customizations.",
+            "Employee feedback notes room for improvement in work culture and internal communications.",
+          ],
+          sentiment:
+            "Generally trusted by large brands for ecommerce operations and praised for responsive support, though usability and data portability are areas for enhancement.",
+        },
+        mixpanel: {
+          strengths: [
+            "Real-time insights; strong event-based analytics for user behavior and retention.",
+            "Easy setup and data visualizations; intuitive UX for non-technical and technical users alike.",
+            "Funnels, segmentation, and dashboards are robust and highly useful.",
+            "Seen as reliable and continually improving, favored by product and marketing managers.",
+          ],
+          painPoints: [
+            "Advanced setup (custom events) may require developer involvement.",
+            "Some features can be hidden or take time to discover in the interface.",
+            "Pricing can escalate for high event volumes or growing teams, challenging for smaller businesses.",
+            "Integrations with other tools sometimes incomplete.",
+          ],
+          sentiment:
+            "Widely recommended for clear analytics and user insights, but teams should budget for potential pricing jumps and ensure developer access for full customization.",
+        },
+        gobblecube: {
+          strengths: [
+            "Speeds up meal prep dramatically (classic Gobble customer reviews highlight very fast, easy meal kit setup).",
+            "Quality of food is generally appreciated; selection accommodates dietary needs.",
+          ],
+          painPoints: [
+            "Multiple customer complaints about customer service: slow replies, lack of meaningful support for billing/shipment issues, and difficulty resolving spoiled/incorrect food deliveries.",
+            "Recurrent concerns about auto-billing and quality control in shipments.",
+            "Some users see the service as 'scammy' in its handling of credits and refund requests.",
+          ],
+          sentiment:
+            "Quick and tasty meals, but customer service and billing practices receive significant criticism, causing dissatisfaction and distrust among some users.",
+        },
+        nielseniq: {
+          strengths: [
+            "Delivers global, comprehensive purchase behavior intelligence.",
+            "Some panelists praise the data depth and find long-term value in consistent surveying.",
+          ],
+          painPoints: [
+            "Major frustration around customer service: slow, repetitive calls, account lockouts, overbearing survey requirements, and cumbersome rewards redemption.",
+            "Frequent technical issues with their app and point systems.",
+            "Perceived as invasive; users report constant reminders and high friction earning/redeeming rewards.",
+          ],
+          sentiment:
+            "Respected for large-scale market data, but consumer panel experiences are hampered by poor app usability, reward issues, and aggressive follow-ups.",
+        },
+        contentsquare: {
+          strengths: [
+            "Top marks for visualizing user behavior, heatmaps, and rapid root-cause analysis of digital journeys.",
+            "AI-powered insights (Sense) and customer success/support teams are highly praised for responsiveness and onboarding help.",
+            "Empowers quick discovery of conversion issues and actionable insights.",
+          ],
+          painPoints: [
+            "Learning curve: some features require development resources to implement fully.",
+            "Price is relatively high compared to industry peers.",
+            "New users can find configuration and prioritization for dev resources challenging.",
+          ],
+          sentiment:
+            "Powerful, highly visual, and transformative for digital analytics teams—though clients note a steep learning curve and wish for lower barriers to advanced feature access.",
+        },
+        applause: {
+          strengths: [
+            "Real-world QA and UX feedback from a global crowd; known for high-quality, actionable bug reports.",
+            "Quick response times from support; professional, vetted testers.",
+            "Customer-centric, always seeking product/service improvement based on client feedback.",
+          ],
+          painPoints: [
+            "Service can be expensive for intensive or continual testing.",
+            "Platform maintenance (keeping up with spreadsheets and video bug submissions) can be cumbersome.",
+            "Some users request more flexible usage models and easier video workflow.",
+          ],
+          sentiment:
+            "Valued partner for QA and usability testing; responsiveness and expertise drive confidence, though pricing and technical workflow could be smoother.",
+        },
+        rasa: {
+          strengths: [
+            "Highly customizable conversational AI with open source benefits.",
+            "Praised especially for helping brands move away from 'black-box' AI; customers value the control and flexibility.",
+            "Engaged developer community and informative content bolster adoption.",
+          ],
+          painPoints: [
+            "Learning curve for non-developers; some products (like Studio) aim to narrow this, but reviewers say technical expertise is still important.",
+            "Taste preferences for beverage (if searching for the coffee-alternative product, not the conversational AI), can also be divisive, but AI product feedback is mostly positive regarding features and support.",
+          ],
+          sentiment:
+            "Respected for powerful, transparent AI tooling—great for enterprises seeking control, though not fully plug-and-play for every team.",
+        },
+        intenthq: {
+          strengths: [
+            "Privacy-first focus stands out; valued for first-party data insights and advanced segmentation.",
+            "Flexible for use in telco and retail, enabling personalized marketing.",
+          ],
+          painPoints: [
+            "Public-facing product reviews are extremely limited.",
+            "Employee feedback appreciates mission but indicates company communications and operational structure could improve.",
+          ],
+          sentiment:
+            "Good reputation in specialist sectors, especially for privacy and granular analytics, but lacks substantial third-party product review data.",
+        },
+        piwheel: {
+          strengths: [
+            "Provides actionable insights into ecommerce performance and market dynamics.",
+            "Notably used by major brands for market share, pricing, and assortment intelligence.",
+          ],
+          painPoints: [
+            "Minimal third-party review coverage; little customer critique or independent feedback found publicly.",
+          ],
+          sentiment:
+            "Generally positive adoption among multinational consumer brands, but a lack of direct user reviews limits insight into specific strengths or weaknesses.",
+        },
+      };
 
-        // Function to render feedback for a company
-        function renderCompanyFeedback(companyKey) {
-            const feedback = companyFeedback[companyKey];
-            if (!feedback) return;
-            const feedbackDiv = document.getElementById('company-feedback');
-            feedbackDiv.innerHTML = `
+      // Function to render feedback for a company
+      function renderCompanyFeedback(companyKey) {
+        const feedback = companyFeedback[companyKey];
+        if (!feedback) return;
+        const feedbackDiv = document.getElementById("company-feedback");
+        feedbackDiv.innerHTML = `
                 <div class="mb-3">
                     <h4 class="text-lg font-semibold text-green-400 mb-1">Where They Excel</h4>
                     <ul class="list-disc pl-5 space-y-1 text-gray-200">
-                        ${feedback.strengths.map(str => `<li>${str}</li>`).join('')}
+                        ${feedback.strengths
+                          .map((str) => `<li>${str}</li>`)
+                          .join("")}
                     </ul>
                 </div>
                 <div class="mb-3">
                     <h4 class="text-lg font-semibold text-red-400 mb-1">Pain Points</h4>
                     <ul class="list-disc pl-5 space-y-1 text-gray-200">
-                        ${feedback.painPoints.map(pain => `<li>${pain}</li>`).join('')}
+                        ${feedback.painPoints
+                          .map((pain) => `<li>${pain}</li>`)
+                          .join("")}
                     </ul>
                 </div>
                 <div>
@@ -700,31 +1102,11 @@
                     <p class="text-gray-300">${feedback.sentiment}</p>
                 </div>
             `;
-        }
+      }
 
-        // Function to render feature usage for a company
-        function renderCompanyFeatureUsage(companyKey) {
-            const usage = companyFeatureUsage[companyKey];
-            if (!usage) return;
-            const usageDiv = document.getElementById('company-feature-usage');
-            usageDiv.innerHTML = `
-                <div class="mb-3">
-                    <h4 class="text-lg font-semibold text-blue-300 mb-1">Most-Used Features</h4>
-                    <ul class="list-disc pl-5 space-y-1 text-gray-200">
-                        ${usage.mostUsed.map(f => `<li>${f}</li>`).join('')}
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-lg font-semibold text-blue-200 mb-1">Feature Usage Trends</h4>
-                    <p class="text-gray-300">${usage.trends}</p>
-                </div>
-            `;
-        }
-
-        // Initial setup
-        tabs.forEach(tab => tab.addEventListener('click', handleTabClick));
-        renderCompany('commerceiq'); // Render the first company by default
-
+      // Initial setup
+      tabs.forEach((tab) => tab.addEventListener("click", handleTabClick));
+      renderCompany("commerceiq"); // Render the first company by default
     </script>
-</body>
+  </body>
 </html>
