@@ -93,7 +93,8 @@
         <!-- Tab Navigation -->
         <div class="mb-8">
             <nav class="tabs-container flex space-x-1 sm:space-x-2 border-b border-gray-800 overflow-x-auto pb-2">
-                <button data-company="commerceiq" class="company-tab active text-sm sm:text-base whitespace-nowrap px-4 py-3 rounded-t-lg">CommerceIQ</button>
+                <button data-company="summary" class="company-tab active text-sm sm:text-base whitespace-nowrap px-4 py-3 rounded-t-lg">Summary</button>
+                <button data-company="commerceiq" class="company-tab text-sm sm:text-base whitespace-nowrap px-4 py-3 rounded-t-lg">CommerceIQ</button>
                 <button data-company="mixpanel" class="company-tab text-sm sm:text-base whitespace-nowrap px-4 py-3 rounded-t-lg">Mixpanel</button>
                 <button data-company="gobblecube" class="company-tab text-sm sm:text-base whitespace-nowrap px-4 py-3 rounded-t-lg">GobbleCube</button>
                 <button data-company="nielseniq" class="company-tab text-sm sm:text-base whitespace-nowrap px-4 py-3 rounded-t-lg">NielsenIQ</button>
@@ -362,14 +363,100 @@
             }
         };
 
+        // Company meta data for overview, industry, flagship, growth
+        const companyMeta = {
+            commerceiq: {
+                overview: "CommerceIQ is a leader in Retail Ecommerce Management (REM), providing an AI-powered platform for automating and optimizing sales, marketing, and supply chain operations across online retail channels. Founded in 2012, it has evolved from Amazon optimization to a comprehensive omnichannel solution, serving over 2,200 brands globally.",
+                industry: "Focus on Consumer Packaged Goods (CPG), Electronics, Furniture, and Grocery. Revenue is concentrated in CPG, Beauty, Pet Supplies, and Grocery (~65%), with Electronics (~20%), Furniture (~10%), and other retail (~5%).",
+                flagship: "The unified CommerceIQ AI Platform, with Digital Shelf Optimization (DSO) as a cornerstone feature, helping brands manage out-of-stocks, optimize retail media, and improve digital shelf health.",
+                growth: "100%+ YoY revenue growth in 2022, driven by new customer acquisition and expansion. Annual recurring revenue grew from below $50M in early 2022 to ~$123M by early 2024, with platform usage surging in DSO and Retail Media Management."
+            },
+            mixpanel: {
+                overview: "Mixpanel is a premier product analytics platform enabling real-time analysis of user behavior in web and mobile apps. Backed by $277M in funding, it serves over 6,000 companies worldwide, helping teams build better products through deep, self-serve insights.",
+                industry: "Versatile across Finance, Media, SaaS, Ecommerce, Healthcare, and AI. Largest segments: SaaS/Tech (~45%), Financial Services (~20%), Media (~15%), Ecommerce (~15%), Healthcare/Other (~5%).",
+                flagship: "Product Analytics platform, with 'Insights' and 'Funnels' reports as core features. Session Replay connects quantitative and qualitative data for user journey analysis.",
+                growth: "72% increase in Weekly Active Users (WAUs) from 2020-2022. Sustained innovation and enterprise focus have driven strong momentum, with deep integration into modern data stacks."
+            },
+            gobblecube: {
+                overview: "GobbleCube is a high-growth, AI-powered sales and revenue analytics platform for consumer brands in hyperlocal and quick commerce markets. Founded in 2022, it achieved $2M ARR within nine months of launch, serving 200+ enterprise brands.",
+                industry: "Dominated by Consumer Goods (FMCG, Food & Beverage, Beauty & Wellness) ~95%, with minor revenue from other categories (~5%).",
+                flagship: "AI-based 'Growth Copilot' platform for revenue monitoring, Share of Voice, Out-of-Stock reduction, and revenue leakage prevention at a hyperlocal level.",
+                growth: "Explosive growth from zero to 200+ clients in one year, fueled by founder-market fit and rapid adoption among CPG brands."
+            },
+            nielseniq: {
+                overview: "NielsenIQ (NIQ) is a global leader in consumer intelligence and market research, with a legacy in market measurement data for retail and consumer goods. Now pivoting to integrate dynamic, AI-driven analytics.",
+                industry: "Core in Consumer Packaged Goods (~60%), Retail (~15%), Technology & Durables (~10%), Financial Services & Media (~10%), Other (~5%).",
+                flagship: "Market Measurement and Consumer Panel Data, with NIQ Product Insights for granular product attribution and trend analysis.",
+                growth: "Steady growth in advanced analytics usage, with a +256% increase in niche product attribute market size over two years. Strategic push into real-time, predictive analytics."
+            },
+            contentsquare: {
+                overview: "ContentSquare is a global leader in Digital Experience Analytics, providing AI-powered insights into customer journeys on web, mobile, and apps. Serves 1,300+ enterprise clients with $347.5M annual revenue.",
+                industry: "Retail & E-commerce (~40%), Financial Services (~25%), Travel & Hospitality (~15%), SaaS/Tech (~10%), Other (~10%).",
+                flagship: "Digital Experience Analytics Platform, with Customer Journey Analysis, Zone-based Heatmaps, and Session Replay as key features.",
+                growth: "Analyzed 90B user sessions in 2025, with platform usage and client base more than doubling in two years. Aggressive platform consolidation through acquisitions."
+            },
+            applause: {
+                overview: "Applause is the global leader in crowdtesting and digital quality, connecting enterprises with a vetted global community for real-world testing. Surpassed $200M ARR in 2025.",
+                industry: "Retail & E-commerce (~30%), Financial Services (~25%), Media & Entertainment (~20%), Technology (~15%), Other (~10%).",
+                flagship: "Fully managed crowdtesting service, with Manual Functional Testing and Mobile App Testing as core offerings.",
+                growth: "ARR grew by 33% from $150M (2022) to $200M (2025), driven by demand in AI testing, accessibility, and payments. High NPS and strong customer retention."
+            },
+            rasa: {
+                overview: "Rasa provides open-source and enterprise-grade tools for building conversational AI, enabling full control and customization for complex, secure dialogues. Raised $83.4M in funding.",
+                industry: "Financial Services (~35%), Telecom (~30%), Healthcare (~20%), Technology & SaaS (~10%), Other (~5%).",
+                flagship: "Rasa Platform, integrating Rasa Pro (NLU, dialogue management) and Rasa Studio (no-code UI), with secure LLM/GenAI integration.",
+                growth: "Doubled enterprise deployments in 2-3 years, with strong developer community growth and major Series C round in 2024."
+            },
+            intenthq: {
+                overview: "IntentHQ is a customer intelligence platform using AI to analyze first-party data for deep, privacy-safe customer insights. Focused on telecom, with $12.5M revenue in 2023.",
+                industry: "Telecommunications (~70%), Financial Services (~15%), Retail & Consumer Goods (~10%), Other (~5%).",
+                flagship: "Customer AI Platform, with Intent Lift, Intent xChange, and Intent Edge for privacy-safe insights and churn prediction.",
+                growth: "Revenue growth from 2021 to 2023, FT1000 recognition, and expanding partnerships. 17% employee growth in 2023."
+            },
+            piwheel: {
+                overview: "PiWheel provides marketplace intelligence and analytics for ecommerce brands, focusing on sales, market share, and digital shelf performance.",
+                industry: "Ecommerce, Retail, CPG, and related sectors (exact split not disclosed).",
+                flagship: "Marketplace Intelligence Dashboards, Ad Automation, and Digital Shelf Analytics for competitive benchmarking and optimization.",
+                growth: "Adoption among multinational brands, with growing usage of dashboards and analytics tools."
+            }
+        };
+
         // DOM Elements
         const contentArea = document.getElementById('analysis-content');
         const tabs = document.querySelectorAll('.company-tab');
 
         // Function to render company content
         function renderCompany(companyKey) {
+            if (companyKey === 'summary') {
+                renderSummary();
+                return;
+            }
+
             const company = companyData[companyKey];
             if (!company) return;
+
+            // Company-level meta data for overview, industry, flagship, growth
+            const meta = companyMeta[companyKey];
+            const overviewHtml = meta ? `
+                <section class="mb-8">
+                    <h3 class="text-2xl font-bold text-yellow-300 mb-2">Overview</h3>
+                    <p class="text-gray-300 mb-4">${meta.overview}</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-gray-900/50 p-4 rounded-lg border border-gray-800">
+                            <h4 class="text-lg font-semibold text-white mb-1">Industry Focus and Revenue</h4>
+                            <p class="text-gray-300">${meta.industry}</p>
+                        </div>
+                        <div class="bg-gray-900/50 p-4 rounded-lg border border-gray-800">
+                            <h4 class="text-lg font-semibold text-white mb-1">Flagship Product</h4>
+                            <p class="text-gray-300">${meta.flagship}</p>
+                        </div>
+                    </div>
+                    <div class="bg-gray-900/50 p-4 rounded-lg border border-gray-800 mt-4">
+                        <h4 class="text-lg font-semibold text-white mb-1">Growth and Trajectory</h4>
+                        <p class="text-gray-300">${meta.growth}</p>
+                    </div>
+                </section>
+            ` : '';
 
             const productsHtml = company.products.map((product, index) => `
                 <div class="bg-gray-900/50 rounded-lg mb-4 border border-gray-800">
@@ -429,13 +516,16 @@
                     <!-- Customers Section -->
                     ${customersHtml}
 
+                    <!-- Company Overview, Industry, Flagship, Growth -->
+                    ${overviewHtml}
+
                     <!-- Products Section -->
                     <h3 class="text-3xl font-bold text-white mb-4 border-b border-gray-700 pb-2">Products</h3>
                     <div>${productsHtml}</div>
 
                     <!-- Product Feedback & Customer Sentiment Section -->
                     <div class="bg-gray-900/50 p-4 rounded-lg border border-gray-800 mb-8">
-                        <h3 class="text-2xl font-bold text-yellow-400 mb-2">Product Feedback & Customer Sentiment</h3>
+                        <h3 class="text-2xl font-bold text-yellow-400 mb-2">Product Feedback and Customer Sentiment</h3>
                         <div id="company-feedback"></div>
                     </div>
 
@@ -449,6 +539,64 @@
             renderCompanyFeedback(companyKey);
             renderCompanyFeatureUsage(companyKey);
             addAccordionListeners();
+        }
+
+        // Function to render summary content
+        function renderSummary() {
+            contentArea.innerHTML = `
+                <div class="company-content fade-in bg-[#1a1a1a] p-6 rounded-lg shadow-2xl border border-gray-800">
+                    <h2 class="text-4xl font-bold text-yellow-400 mb-4">Market Insights and Competitive Landscape</h2>
+                    <p class="text-lg text-gray-300 mb-6">AI-driven automation is now the central nervous system for modern enterprises, especially in Consumer Goods and Financial Services. Companies like CommerceIQ, GobbleCube, and NielsenIQ are in an arms race to provide the most sophisticated tools for brands to win in the algorithmic world of retail. API-first platforms like Pinwheel and Rasa are enabling digital transformation in finance and telecom, while Mixpanel and ContentSquare lead in analytics for product and digital experience. Specialization, platform unification, and generative AI are the dominant trends shaping this landscape.</p>
+                    
+                    <h3 class="text-2xl font-bold text-white mb-4">Competitive Snapshot</h3>
+                    <div class="overflow-x-auto mb-6">
+                        <table class="min-w-full text-sm text-gray-200 border border-gray-700 rounded-lg">
+                            <thead class="bg-gray-900">
+                                <tr>
+                                    <th class="px-3 py-2">Company</th>
+                                    <th class="px-3 py-2">Founded</th>
+                                    <th class="px-3 py-2">HQ</th>
+                                    <th class="px-3 py-2">Funding</th>
+                                    <th class="px-3 py-2">Revenue</th>
+                                    <th class="px-3 py-2">Industries</th>
+                                    <th class="px-3 py-2">Flagship Product</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-[#181818]">
+                                <tr><td class="px-3 py-2 font-bold">CommerceIQ</td><td>2012</td><td>Palo Alto, CA</td><td>$196M</td><td>$123.3M</td><td>Consumer Goods, Electronics, and Grocery</td><td>CommerceIQ AI Platform</td></tr>
+                                <tr><td class="px-3 py-2 font-bold">Mixpanel</td><td>2009</td><td>San Francisco, CA</td><td>$277M</td><td>$86.9M</td><td>SaaS, Financial Services, and Media</td><td>Product Analytics Platform</td></tr>
+                                <tr><td class="px-3 py-2 font-bold">GobbleCube</td><td>2022</td><td>Gurugram, India</td><td>$5.4M</td><td>~$2M (ARR)</td><td>Consumer Goods (Hyperlocal)</td><td>AI Growth Copilot</td></tr>
+                                <tr><td class="px-3 py-2 font-bold">NielsenIQ</td><td>1923</td><td>Chicago, IL</td><td>N/A</td><td>$4.0B</td><td>Consumer Goods, Retail, and Tech</td><td>Market Measurement & Consumer Data</td></tr>
+                                <tr><td class="px-3 py-2 font-bold">ContentSquare</td><td>2012</td><td>New York, NY</td><td>$1.4B</td><td>$347.5M</td><td>Retail, Financial Services, and Travel</td><td>Digital Experience Analytics Platform</td></tr>
+                                <tr><td class="px-3 py-2 font-bold">Applause</td><td>2007</td><td>Framingham, MA</td><td>N/A</td><td>>$200M (ARR)</td><td>Retail, Financial Services, and Media</td><td>Crowdtesting Platform</td></tr>
+                                <tr><td class="px-3 py-2 font-bold">Rasa</td><td>2016</td><td>San Francisco, CA</td><td>$83.4M</td><td>N/A</td><td>Financial Services, Healthcare, and Telecom</td><td>Rasa Platform (Conversational AI)</td></tr>
+                                <tr><td class="px-3 py-2 font-bold">IntentHQ</td><td>2010</td><td>London, UK</td><td>$16.3M</td><td>$12.5M</td><td>Telecommunications and Retail</td><td>Customer AI Platform</td></tr>
+                                <tr><td class="px-3 py-2 font-bold">Pinwheel</td><td>2018</td><td>New York, NY</td><td>$84M</td><td>N/A</td><td>Financial Services, Fintech, and Lending</td><td>Payroll & Income API</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <h3 class="text-2xl font-bold text-white mb-4">Key Market Trends</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gray-900/50 p-4 rounded-lg border border-gray-800">
+                            <h4 class="text-lg font-semibold text-yellow-300 mb-2">CPG and Retail Arms Race</h4>
+                            <p class="text-gray-300">The digital shelf has become the primary battleground for consumer brands. CommerceIQ, GobbleCube, and NielsenIQ are providing AI-driven capabilities for pricing, promotions, and inventory management in algorithmic retail environments.</p>
+                        </div>
+                        <div class="bg-gray-900/50 p-4 rounded-lg border border-gray-800">
+                            <h4 class="text-lg font-semibold text-blue-300 mb-2">API-fication and Enterprise</h4>
+                            <p class="text-gray-300">Legacy industries are undergoing digital transformation through API-first platforms. Pinwheel provides income data APIs for banks, while Rasa offers flexible AI frameworks for enterprises.</p>
+                        </div>
+                        <div class="bg-gray-900/50 p-4 rounded-lg border border-gray-800">
+                            <h4 class="text-lg font-semibold text-green-300 mb-2">Analytics Specialization</h4>
+                            <p class="text-gray-300">Market leaders provide deep, domain-specific intelligence. Mixpanel focuses on product analytics, ContentSquare on digital experience, and IntentHQ on telecom-specific customer intelligence.</p>
+                        </div>
+                        <div class="bg-gray-900/50 p-4 rounded-lg border border-gray-800">
+                            <h4 class="text-lg font-semibold text-purple-300 mb-2">Platform Consolidation</h4>
+                            <p class="text-gray-300">Enterprises seek to reduce vendor complexity. Platforms that unify multiple data points and workflows are becoming increasingly valuable compared to siloed point solutions.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
         }
 
         // Function to handle tab clicks
@@ -723,7 +871,7 @@
 
         // Initial setup
         tabs.forEach(tab => tab.addEventListener('click', handleTabClick));
-        renderCompany('commerceiq'); // Render the first company by default
+        renderCompany('summary'); // Render the summary by default
 
     </script>
 </body>
