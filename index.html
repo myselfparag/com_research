@@ -429,18 +429,25 @@
                     <!-- Customers Section -->
                     ${customersHtml}
 
+                    <!-- Products Section -->
+                    <h3 class="text-3xl font-bold text-white mb-4 border-b border-gray-700 pb-2">Products</h3>
+                    <div>${productsHtml}</div>
+
                     <!-- Product Feedback & Customer Sentiment Section -->
                     <div class="bg-gray-900/50 p-4 rounded-lg border border-gray-800 mb-8">
                         <h3 class="text-2xl font-bold text-yellow-400 mb-2">Product Feedback & Customer Sentiment</h3>
                         <div id="company-feedback"></div>
                     </div>
 
-                    <!-- Products Section -->
-                    <h3 class="text-3xl font-bold text-white mb-4 border-b border-gray-700 pb-2">Products</h3>
-                    <div>${productsHtml}</div>
+                    <!-- Feature-Level Usage Analysis Section -->
+                    <div class="bg-gray-900/50 p-4 rounded-lg border border-gray-800 mb-8">
+                        <h3 class="text-2xl font-bold text-blue-400 mb-2">Feature-Level Usage Analysis</h3>
+                        <div id="company-feature-usage"></div>
+                    </div>
                 </div>
             `;
             renderCompanyFeedback(companyKey);
+            renderCompanyFeatureUsage(companyKey);
             addAccordionListeners();
         }
 
@@ -587,6 +594,89 @@
             }
         };
 
+        // Add feature usage data for each company
+        const companyFeatureUsage = {
+            commerceiq: {
+                mostUsed: [
+                    "Reporting Dashboards: Widely used for consolidating KPIs such as ad impressions, click-through rates, and sales, enabling real-time business review.",
+                    "AI Recommendations: Frequently utilized to optimize supply chain operations, recover lost revenue, and manage inventory with actionable insights.",
+                    "Share of Voice & Shelf Monitoring: Popular for spotting competitive gaps and tracking product visibility across retailers.",
+                    "Digital Shelf Optimization: High adoption for monitoring out-of-stock SKUs and automating issue detection."
+                ],
+                trends: "Dashboards and automated reporting are daily tools for sales/marketing teams, while AI-driven supply chain and ad optimization see regular, campaign-based engagement."
+            },
+            mixpanel: {
+                mostUsed: [
+                    "Funnels & Conversion Tracking: Core for tracking user journey steps and conversion bottlenecks, especially among product teams.",
+                    "Event-Based Segmentation and Cohort Analysis: Highly utilized for behavioral segmentation and understanding user retention.",
+                    "User Activity Metrics (DAU/WAU/MAU): Regularly referenced for engagement measurements.",
+                    "Dashboards & Data Visualization: Key for presenting real-time insights to stakeholders.",
+                    "A/B Testing & Reporting: Event segmentation and reporting are consistently leveraged in experimentation scenarios."
+                ],
+                trends: "Funnels, segmentation, and dashboards are the most actively used features. Teams regularly rely on customizable analytics and reporting for ongoing product optimization."
+            },
+            gobblecube: {
+                mostUsed: [
+                    "Automated Data Collection & Customizable Data Pipelines: Heavily relied on to unify fragmented data for growth analytics and reduce manual effort.",
+                    "Automated Root-Cause Analysis (RCA): Frequently used for fast issue detection when performance dips.",
+                    "Unified Control Tower Dashboard: Central feature for real-time performance monitoring and insights delivery.",
+                    "AI-Driven Data Processing & Reporting: Regularly engaged for trend visualization and anomaly detection in revenue data."
+                ],
+                trends: "Automated workflows and dashboards are mainstays. RCA is invoked for troubleshooting and strategic adjustments."
+            },
+            nielseniq: {
+                mostUsed: [
+                    "Purchase Behavior Analytics & Market Data: Regularly accessed by clients for comprehensive transaction and product attribute analysis.",
+                    "Consumer Segmentation Models: Used frequently for refining target audience and product testing.",
+                    "Personalization & Feedback Survey Tools: Support ongoing customer engagement and longitudinal studies.",
+                    "Custom Reports & Insights Visualization: Common for campaign planning and market performance evaluation."
+                ],
+                trends: "Clients rely most on market/consumer analytics and segmentation features for core research, while custom reporting is essential for tailored insight delivery."
+            },
+            contentsquare: {
+                mostUsed: [
+                    "Autocapture & Behavioral Analytics: Heavily used for automatically gathering all user interactions without manual tagging.",
+                    "Heatmaps: Core tool for visualizing page-level and element-specific user engagement.",
+                    "Session Replay & Journey Analysis: Frequently accessed for root-cause analysis and UX audits.",
+                    "AI Insights & Voice of Customer: Popular for identifying patterns and overlaying quantitative/qualitative data."
+                ],
+                trends: "Heatmaps, session replays, and journey analysis see daily use among digital teams. AI-powered recommendations are often cited as transformative for optimization."
+            },
+            applause: {
+                mostUsed: [
+                    "Manual and Automated Testing Platforms: Used for rapid bug detection and regression checks, cornerstone features for QA teams.",
+                    "Crowdtesting & Real-World Feedback Loops: Engaged for enhancing app quality with global user input.",
+                    "App Analytics & Sentiment Measurement: Popular for extracting actionable feedback from millions of user reviews."
+                ],
+                trends: "Testing platforms and analytics tools are top daily drivers, with competitive benchmarking and workflow features also significantly leveraged."
+            },
+            rasa: {
+                mostUsed: [
+                    "Intent Recognition & NLU Engines: Utilized most by enterprises for customizable conversational flows.",
+                    "Pro-Code and No-Code Development Options (Rasa Pro, Rasa Studio): Frequently used in tandem for team collaboration.",
+                    "Open Source Custom Components: Extensively used by technical teams seeking flexibility.",
+                    "Telemetry & Feature Usage Analytics: Offers deep observability for optimizing deployment and usage."
+                ],
+                trends: "Customizable pipelines and intent handling are heavily used. Feature usage analytics help teams prioritize which NLU/response components to optimize."
+            },
+            intenthq: {
+                mostUsed: [
+                    "AI-Driven Customer Segmentation: Widely used for highly targeted marketing and customer engagement.",
+                    "Real-Time Insights & Predictive Analytics: Main feature for adapting strategies to evolving customer behaviors.",
+                    "Churn Prediction & Lifetime Value Analysis: Frequently leveraged for retention and upsell initiatives."
+                ],
+                trends: "Segmentation, predictive, and real-time insight capabilities are in constant use for campaign planning and customer understanding."
+            },
+            piwheel: {
+                mostUsed: [
+                    "Marketplace Intelligence Dashboards: Central tool for brands tracking sales, market share, and category performance.",
+                    "Ad Automation & Campaign Monitoring: Used for optimizing spend and monitoring advertising efficacy.",
+                    "Digital Shelf Analytics & Performance Reports: Key for competitive benchmarking and inventory optimization."
+                ],
+                trends: "Performance dashboards, ad automation, and digital shelf analytics are the primary, high-usage features across customer teams."
+            }
+        };
+
         // Function to render feedback for a company
         function renderCompanyFeedback(companyKey) {
             const feedback = companyFeedback[companyKey];
@@ -608,6 +698,25 @@
                 <div>
                     <h4 class="text-lg font-semibold text-yellow-300 mb-1">Customer Sentiment</h4>
                     <p class="text-gray-300">${feedback.sentiment}</p>
+                </div>
+            `;
+        }
+
+        // Function to render feature usage for a company
+        function renderCompanyFeatureUsage(companyKey) {
+            const usage = companyFeatureUsage[companyKey];
+            if (!usage) return;
+            const usageDiv = document.getElementById('company-feature-usage');
+            usageDiv.innerHTML = `
+                <div class="mb-3">
+                    <h4 class="text-lg font-semibold text-blue-300 mb-1">Most-Used Features</h4>
+                    <ul class="list-disc pl-5 space-y-1 text-gray-200">
+                        ${usage.mostUsed.map(f => `<li>${f}</li>`).join('')}
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-blue-200 mb-1">Feature Usage Trends</h4>
+                    <p class="text-gray-300">${usage.trends}</p>
                 </div>
             `;
         }
